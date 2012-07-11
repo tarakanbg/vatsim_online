@@ -1,6 +1,6 @@
 # VatsimOnline
 
-TODO: Write a gem description
+In early development. Not supposed to work or to make sense.
 
 ## Installation
 
