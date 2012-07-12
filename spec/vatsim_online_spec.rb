@@ -11,38 +11,49 @@ describe VatsimOnline do
     end
   end
 
-  describe "pick_random_server" do
-    it "should return a string with an URL" do
-      VatsimOnline.pick_random_server.class.should eq(String)
-      VatsimOnline.pick_random_server[0..6].should eq("http://")
-    end
-  end
-
   describe "data_file" do
-    it "should contain the right text" do
-      data[0..11].should eq("; Created at")
-    end
-  end
-
-  describe "csv_data" do
-    it "should convert to a valid CSV" do
-      VatsimOnline.csv_data.class.should eq(CSV)
+    it "should contain file path" do
+      VatsimOnline.data_file.class.should eq(String)
+      VatsimOnline.data_file.should include("vatsim_data.txt")
     end
   end
 
   # describe "create_status_tempfile" do
-  #   it "should return a status.txt contents" do
-  #     VatsimOnline.create_status_tempfile.class.should eq(String)
-  #     VatsimOnline.create_status_tempfile[0..16].should eq("; IMPORTANT NOTE:")
+  #   it "should create a file" do
+  #     VatsimOnline.create_status_tempfile
+  #     File.exists?("#{Dir.tmpdir}/vatsim_status.txt").should be true
   #   end
   # end
 
   describe "read_status_tempfile" do
-    it "should return a status.txt contents" do
-      VatsimOnline.read_status_tempfile.class.should eq(String)
-      VatsimOnline.read_status_tempfile[0..16].should eq("; IMPORTANT NOTE:")
+    it "should confirm a file exists" do
+      VatsimOnline.read_status_tempfile
+      File.exists?("#{Dir.tmpdir}/vatsim_status.txt").should be true
     end
   end
+
+  describe "status_file" do
+    it "should return status.txt path" do
+      VatsimOnline.status_file.class.should eq(String)
+      VatsimOnline.status_file.should include("vatsim_status.txt")
+    end
+  end
+
+  # describe "create_data_tempfile" do
+  #   it "should confirm a file exists" do
+  #     VatsimOnline.create_local_data_file
+  #     File.exists?("#{Dir.tmpdir}/vatsim_data.txt").should be true
+  #   end
+  # end
+
+  describe "read_data_tempfile" do
+    it "should confirm a file exists" do
+      VatsimOnline.read_local_datafile
+      File.exists?("#{Dir.tmpdir}/vatsim_data.txt").should be true
+    end
+  end
+
+
 
 
 end

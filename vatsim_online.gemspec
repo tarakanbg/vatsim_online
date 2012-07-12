@@ -21,4 +21,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "libnotify"
   gem.add_development_dependency "guard-rspec"
   gem.add_dependency "curb"
+  gem.add_dependency "time_diff"
 end
