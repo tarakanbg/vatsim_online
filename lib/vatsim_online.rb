@@ -13,5 +13,4 @@ module VatsimOnline
     VatsimTools::StationParser.new(icao,args).sorted_station_objects
   end
 
-
 end

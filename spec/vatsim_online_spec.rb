@@ -5,7 +5,20 @@ describe VatsimOnline do
   describe "vatsim_online" do
     it "should work :)" do
       gem_data_file
-      "ZGGG".vatsim_online.class.should eq(Has)
+      "ZGGG".vatsim_online.class.should eq(Hash)
+      "LO".vatsim_online.class.should eq(Hash)
+      "LO".vatsim_online[:atc].size.should eq(2)
+      "LO".vatsim_online[:pilots].size.should eq(21)
+      "LO".vatsim_online(:pilots => true, :atc => true).class.should eq(Hash)
+      "LO".vatsim_online(:pilots => true, :atc => true)[:atc].size.should eq(2)
+      "LO".vatsim_online(:pilots => true, :atc => true)[:pilots].size.should eq(21)
+      "LO".vatsim_online(:atc => false)[:atc].size.should eq(0)
+      "LO".vatsim_online(:atc => false)[:pilots].size.should eq(21)
+      "LO".vatsim_online(:pilots => false)[:atc].size.should eq(2)
+      "LO".vatsim_online(:pilots => false)[:pilots].size.should eq(0)
+
+      "LO".vatsim_online[:pilots].first.callsign.should eq("ACH0838")
+      "LO".vatsim_online[:atc].first.callsign.should eq("LOVV_CTR")
     end
   end
 
