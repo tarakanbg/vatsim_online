@@ -71,13 +71,13 @@ stations and pilots stations. Each of those is an **array**, cosnsisting of
 station **objects**. Each of these objects includes a number of **attributes**:
 
 ```ruby
-icao_vatsim_online # => {:atc => [a1, a2, a3 ...], :pilots => [p1, p2, p3 ...]}
+icao.vatsim_online # => {:atc => [a1, a2, a3 ...], :pilots => [p1, p2, p3 ...]}
 
-icao_vatsim_online[:atc] #=> [a1, a2, a3 ...]
-icao_vatsim_online[:pilots] #=> [p1, p2, p3 ...]
+icao.vatsim_online[:atc] #=> [a1, a2, a3 ...]
+icao.vatsim_online[:pilots] #=> [p1, p2, p3 ...]
 
-icao_vatsim_online[:atc].first #=> a1
-icao_vatsim_online[:pilots].first #=> p1
+icao.vatsim_online[:atc].first #=> a1
+icao.vatsim_online[:pilots].first #=> p1
 
 a1.callsign #=> "LQSA_TWR"
 a1.frequency #=> "118.25"
