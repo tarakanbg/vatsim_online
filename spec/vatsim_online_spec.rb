@@ -2,7 +2,12 @@ require 'spec_helper.rb'
 
 describe VatsimOnline do
 
-
+  describe "vatsim_online" do
+    it "should work :)" do
+      gem_data_file
+      "ZGGG".vatsim_online.class.should eq(Has)
+    end
+  end
 
 end
 

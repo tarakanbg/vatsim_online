@@ -10,6 +10,7 @@ end
 module VatsimOnline
 
   def self.vatsim_online(icao, args)
+    VatsimTools::StationParser.new(icao,args).sorted_station_objects
   end
 
 
