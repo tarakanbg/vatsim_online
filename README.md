@@ -9,7 +9,7 @@ on preset intervals and cached locally to avoid flooding the servers.
 ### Badges of (dis)honour
 
 * Testing (Travis CI): [![Build Status](https://secure.travis-ci.org/tarakanbg/vatsim_online.png?branch=master)](http://travis-ci.org/tarakanbg/vatsim_online)
-* Code quality (CodeClimate): [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/tarakanbg/vatsim_online)
+* Code Analysis (CodeClimate): [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/tarakanbg/vatsim_online)
 * Dependencies: (Gemnasium) [![Gemnasium](https://gemnasium.com/tarakanbg/vatsim_online.png?travis)](https://gemnasium.com/tarakanbg/vatsim_online)
 
 ## Installation
@@ -45,7 +45,7 @@ icao = "LOWW"
 icao.vatsim_online
 ```
 If you want to retrieve the currently active stations for an entire region
-(FIR/ARTCC), then you can use the first 2-3 letters of the regions ICAO name.
+(FIR/ARTCC), then you can use the first 2-3 letters of the region's ICAO name.
 For example if you want to pull all the stations active in Austria (ICAO code
 for the FIR is LOVV), you can use `"LO"` as your ICAO search string: all Austrian
 airports and ATC station callsigns start with `"LO"`:
@@ -58,6 +58,12 @@ airports and ATC station callsigns start with `"LO"`:
 icao = "LO"
 icao.vatsim_online
 ```
+When parsing the pilot stations for particular airport or area, the library will
+return the pilots that are flying **to or from** the given area or airport,
+not the current enroute stations. The discovery algorithm is based on **origin
+and destination**.
+
+
 ### Anatomy of method returns
 
 The `vatsim_online` method returns a **hash** of 2 elements: the matching atc
@@ -116,7 +122,7 @@ of arguments. The currently supported arguments and their defaults are:
 Both options can be used to exclude all ATC or pilots stations respectively from
 the request, in order to speed it up and avoid processing useless data.
 
-** Examples: **
+**Examples:**
 
 ```ruby
 
@@ -127,10 +133,68 @@ the request, in order to speed it up and avoid processing useless data.
 "LO".vatsim_online(:pilots => false)[:atc] #=> [a1, a2, a3...]
 
 "LO".vatsim_online(:atc => false)[:pilots].first.callsign #=> "ACH0838"
-"LO".vatsim_online(:pilots => false).first.callsign #=> "LOVV_CTR"
+"LO".vatsim_online(:pilots => false)[:atc].first.callsign #=> "LOVV_CTR"
 
 ```
 
+### Example of Ruby on Rails implementation
+
+Here's a possible scenario of using this gem in a Ruby on Rails application.
+Verbosity is kept on purpose for clarity.
+
+**In your controller:**
+```ruby
+def index
+
+  # We want to retrieve all Austrian online stations (ATC and pilots)
+  icao = "LO"
+  stations = icao.vatsim_online
+
+  # Now we will assign the ATCs and the pilots to separate instance variables,
+  # to be able to loop through them separately in the view
+  @atc = stations[:atc]
+  @pilots = stations[:pilots]
+end
+
+```
+
+**In your view (HAML is used for clarity):**
+
+```haml
+- for atc in @atc
+  %li
+    = atc.callsign
+    = atc.frequency
+    = atc.rating
+    = atc.name
+    = atc.atis
+
+- for pilot in @pilots
+  %li
+    = pilot.callsign
+    = atc.name
+    = atc.origin
+    = atc.destination
+    = atc.route
+    = atc.altitude
+    = atc.groundspeed
+    = atc.remarks
+
+```
+
+### Notes
+
+* Vatsim status and data files are cached locally to reduce the load on vatsim
+servers. Random server is chosen to retrieve the data each time. By default the
+status file is updated once every 4 hours and the data file once every 3 minutes
+regardless of the number of incoming requests.
+* The data is cached in your default TEMP directory (OS specific)
+* All the data retrieval and caching logic is encapsulated in a separate class
+`VatsimTools::DataDownloader` which can be mixed in other applications and
+libraries too.
+* The ICAO string used as a search criteria **is not** case sensitive
+* Pilot stations returned are based on origin and destination airports, the
+current algorithm does not evaluate enroute flights.
 
 ## Contributing
 

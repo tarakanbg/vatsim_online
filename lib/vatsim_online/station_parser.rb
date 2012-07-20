@@ -14,7 +14,7 @@ module VatsimTools
     def initialize(icao, args = nil)
       VatsimTools::DataDownloader.new
       args.class == Hash ? @role = determine_role(args) : @role = "all"
-      @icao = icao
+      @icao = icao.upcase
     end
 
     def determine_role(args)

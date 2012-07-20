@@ -20,6 +20,14 @@ describe VatsimOnline do
       "LO".vatsim_online[:pilots].first.callsign.should eq("ACH0838")
       "LO".vatsim_online[:atc].first.callsign.should eq("LOVV_CTR")
     end
+
+    it "should be case insensitive" do
+      gem_data_file
+      "lo".vatsim_online[:atc].size.should eq(2)
+      "lo".vatsim_online[:pilots].size.should eq(21)
+      "lo".vatsim_online(:pilots => true, :atc => true)[:atc].size.should eq(2)
+      "lo".vatsim_online(:pilots => true, :atc => true)[:pilots].size.should eq(21)
+    end
   end
 
 end
