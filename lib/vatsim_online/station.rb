@@ -1,4 +1,4 @@
-module VatsimOnline
+module VatsimTools
   class Station
     attributes = %w{callsign name role frequency altitude groundspeed aircraft
                  departure destination rating facility remarks route atis logon}
