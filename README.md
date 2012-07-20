@@ -125,7 +125,6 @@ the request, in order to speed it up and avoid processing useless data.
 **Examples:**
 
 ```ruby
-
 # Lets exclude all ATC from our request and get the pilots only
 "LO".vatsim_online(:atc => false)[:pilots] #=> [p1, p2, p3...]
 
@@ -145,7 +144,6 @@ Verbosity is kept on purpose for clarity.
 **In your controller:**
 ```ruby
 def index
-
   # We want to retrieve all Austrian online stations (ATC and pilots)
   icao = "LO"
   stations = icao.vatsim_online
@@ -155,7 +153,6 @@ def index
   @atc = stations[:atc]
   @pilots = stations[:pilots]
 end
-
 ```
 
 **In your view (HAML is used for clarity):**
@@ -179,7 +176,6 @@ end
     = atc.altitude
     = atc.groundspeed
     = atc.remarks
-
 ```
 
 ### Notes
