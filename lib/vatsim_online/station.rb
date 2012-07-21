@@ -1,3 +1,4 @@
+# encoding: utf-8
 module VatsimTools
   class Station
     attributes = %w{callsign name role frequency altitude groundspeed aircraft
@@ -19,7 +20,7 @@ module VatsimTools
       @facility = station[18]
       @remarks = station[29]
       @route = station[30]
-      @atis = station[35].mb_chars if station[35]
+      @atis = station[35].gsub("^§".force_encoding("ISO-8859-15"), ". ") if station[35]
       @logon = station[37]
     end
 
