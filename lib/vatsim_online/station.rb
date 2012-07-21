@@ -19,7 +19,7 @@ module VatsimTools
       @facility = station[18]
       @remarks = station[29]
       @route = station[30]
-      @atis = station[35].force_encoding("UTF-8") if station[35]
+      @atis = station[35].mb_chars if station[35]
       @logon = station[37]
     end
 
