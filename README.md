@@ -199,6 +199,7 @@ current algorithm does not evaluate enroute flights.
 * Station attribute `departure` is now renamed to `origin`
 * UTF-8 is now enforced for all local caching and file/string manipulations, the
 original Vatsim data is re-encoded
+* Station ATIS is now cleaned of invalid and obscure characters
 * Improved documentation
 
 ## Contributing
