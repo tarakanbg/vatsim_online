@@ -102,7 +102,7 @@ Here's a complete list of the station object attributes that can be accessed:
 * altitude
 * groundspeed
 * aircraft
-* departure
+* origin
 * destination
 * rating
 * facility
@@ -169,13 +169,13 @@ end
 - for pilot in @pilots
   %li
     = pilot.callsign
-    = atc.name
-    = atc.origin
-    = atc.destination
-    = atc.route
-    = atc.altitude
-    = atc.groundspeed
-    = atc.remarks
+    = pilot.name
+    = pilot.origin
+    = pilot.destination
+    = pilot.route
+    = pilot.altitude
+    = pilot.groundspeed
+    = pilot.remarks
 ```
 
 ### Notes
@@ -191,6 +191,13 @@ libraries too.
 * The ICAO string used as a search criteria **is not** case sensitive
 * Pilot stations returned are based on origin and destination airports, the
 current algorithm does not evaluate enroute flights.
+
+## Changelog
+
+### v. 0.2 - 21 July 2012
+
+* Station attribute `departure` is now renamed to `origin`
+* Improved documentation
 
 ## Contributing
 

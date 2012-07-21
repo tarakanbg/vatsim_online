@@ -1,7 +1,7 @@
 module VatsimTools
   class Station
     attributes = %w{callsign name role frequency altitude groundspeed aircraft
-                 departure destination rating facility remarks route atis logon}
+                 origin destination rating facility remarks route atis logon}
     attributes.each {|attribute| attr_accessor attribute.to_sym }
 
 
@@ -13,15 +13,16 @@ module VatsimTools
       @altitude = station[7]
       @groundspeed = station[8]
       @aircraft = station[9]
-      @departure = station[11]
+      @origin = station[11]
       @destination = station[13]
       @rating = station[16]
       @facility = station[18]
       @remarks = station[29]
       @route = station[30]
-      @atis = station[35]
+      @atis = station[35].force_encoding("UTF-8") if station[35]
       @logon = station[37]
     end
+
 
   end
 end
