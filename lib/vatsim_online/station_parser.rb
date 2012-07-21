@@ -26,7 +26,7 @@ module VatsimTools
 
     def stations
       stations = []
-      CSV.foreach(LOCAL_DATA, :col_sep =>':', encoding: "iso-8859-15") do |row|
+      CSV.foreach(LOCAL_DATA, :col_sep =>':') do |row|
         callsign, origin, destination, client = row[0].to_s, row[11].to_s, row[13].to_s, row[3].to_s
         stations << row if (callsign[0...@icao.length] == @icao && client == "ATC") unless @role == "pilot"
         stations << row if (origin[0...@icao.length] == @icao || destination[0...@icao.length] == @icao) unless @role == "atc"
