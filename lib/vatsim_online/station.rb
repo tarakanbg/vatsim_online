@@ -27,7 +27,7 @@ module VatsimTools
     def atis_cleaner(raw_atis)
       while raw_atis.index('^') != nil
         index = raw_atis.index('^')
-        raw_atis.insert(index, '. ')
+        # raw_atis.insert(index, '. ')
         raw_atis.slice!(index..index + 1)
       end
       raw_atis
