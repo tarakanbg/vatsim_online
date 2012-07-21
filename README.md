@@ -197,6 +197,8 @@ current algorithm does not evaluate enroute flights.
 ### v. 0.2 - 21 July 2012
 
 * Station attribute `departure` is now renamed to `origin`
+* UTF-8 is now enforced for all local caching and file/string manipulations, the
+original Vatsim data is re-encoded
 * Improved documentation
 
 ## Contributing

@@ -20,7 +20,7 @@ module VatsimTools
       @facility = station[18]
       @remarks = station[29]
       @route = station[30]
-      @atis = station[35]#.gsub("^§".mb, ". ") if station[35]
+      @atis = station[35].chars.select{|c| c.valid_encoding?}.join if station[35]
       @logon = station[37]
     end
 
