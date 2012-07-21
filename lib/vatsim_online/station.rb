@@ -20,8 +20,17 @@ module VatsimTools
       @facility = station[18]
       @remarks = station[29]
       @route = station[30]
-      @atis = station[35].chars.select{|c| c.valid_encoding?}.join if station[35]
+      @atis = atis_cleaner(station[35]) if station[35]
       @logon = station[37]
+    end
+
+    def atis_cleaner(raw_atis)
+      while raw_atis.index('^') != nil
+        index = raw_atis.index('^')
+        raw_atis.insert(index, '. ')
+        raw_atis.slice!(index..index + 1)
+      end
+      raw_atis
     end
 
 
