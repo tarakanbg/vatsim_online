@@ -77,7 +77,7 @@ station **objects**. Each of these objects includes a number of **attributes**:
 
 ```ruby
 icao.vatsim_online # => {:atc => [a1, a2, a3 ...], :pilots => [p1, p2, p3, p4 ...],
-                         :departures => [p1, p4 ...], :arrivals => [p2, p3...]}
+                   #    :departures => [p1, p4 ...], :arrivals => [p2, p3...]}
 
 icao.vatsim_online[:atc] #=> [a1, a2, a3 ...]
 icao.vatsim_online[:pilots] #=> [p1, p2, p3 ...]
@@ -131,8 +131,10 @@ Here's a complete list of the station object attributes that can be accessed:
 The `vatsim online` method can be customized by passing in a hash-style collection
 of arguments. The currently supported arguments and their defaults are:
 
-* :atc => true (Possible values: true, false. Default value: true)
-* :pilots => true (Possible values: true, false. Default value: true)
+```ruby
+:atc => true     # Possible values: true, false. Default: true
+:pilots => true  # Possible values: true, false. Default: true
+```
 
 Both options can be used to exclude all ATC or pilots stations respectively from
 the request, in order to speed it up and avoid processing useless data.
