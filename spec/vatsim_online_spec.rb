@@ -48,6 +48,8 @@ describe VatsimTools::Station do
       new_object.rating.should eq("3")
       new_object.facility.should eq("5")
       new_object.logon.should eq("20120722092836")
+      new_object.latitude.should eq("2.93968")
+      new_object.longitude.should eq("101.39812")
     end
   end
 

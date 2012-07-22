@@ -103,6 +103,15 @@ describe VatsimTools::StationParser do
       target.new(icao, pilots).sorted_station_objects[:pilots].size.should eq(0)
       target.new(icao, atc).sorted_station_objects[:atc].first.callsign.should eq("WMKK_APP")
     end
+
+    it "should recognize arrivals and departures" do
+      gem_data_file
+      icao = "LO"
+      target.new(icao).sorted_station_objects[:pilots].size.should eq(12)
+      target.new(icao).sorted_station_objects[:pilots].size.should eq(target.new(icao).sorted_station_objects[:arrivals].size + target.new(icao).sorted_station_objects[:departures].size)
+      target.new(icao).sorted_station_objects[:arrivals].size.should eq(6)
+      target.new(icao).sorted_station_objects[:departures].size.should eq(6)
+    end
   end
 
 

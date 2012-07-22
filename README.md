@@ -12,6 +12,10 @@ on preset intervals and cached locally to avoid flooding the servers.
 * Code Analysis (CodeClimate): [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/tarakanbg/vatsim_online)
 * Dependencies: (Gemnasium) [![Gemnasium](https://gemnasium.com/tarakanbg/vatsim_online.png?travis)](https://gemnasium.com/tarakanbg/vatsim_online)
 
+## Requirements
+
+[Ruby 1.9.3](http://www.ruby-lang.org/en/downloads/) or higher
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -66,15 +70,19 @@ and destination**.
 
 ### Anatomy of method returns
 
-The `vatsim_online` method returns a **hash** of 2 elements: the matching atc
-stations and pilots stations. Each of those is an **array**, cosnsisting of
+The `vatsim_online` method returns a **hash** of 4 elements: 1) the matching *atc*
+stations, 2) all matching *pilots* stations, 3) matching *arrivals*, 4) matching
+*departures*. Each of those is an **array**, cosnsisting of
 station **objects**. Each of these objects includes a number of **attributes**:
 
 ```ruby
-icao.vatsim_online # => {:atc => [a1, a2, a3 ...], :pilots => [p1, p2, p3 ...]}
+icao.vatsim_online # => {:atc => [a1, a2, a3 ...], :pilots => [p1, p2, p3, p4 ...], :departures => [p1, p4 ...], :arrivals => [p2, p3...]}
 
 icao.vatsim_online[:atc] #=> [a1, a2, a3 ...]
 icao.vatsim_online[:pilots] #=> [p1, p2, p3 ...]
+icao.vatsim_online[:departures] #=> [p1, p3 ...]
+icao.vatsim_online[:arrivals] #=> [p2, p4 ...]
+
 
 icao.vatsim_online[:atc].first #=> a1
 icao.vatsim_online[:pilots].first #=> p1
@@ -90,6 +98,10 @@ p1.destination #=> "LDSP"
 p1.remarks #=> "/V/ RMK/CHARTS"
 ...
 ```
+
+`Arrivals` and `departures` are returned separately for convenience, in case you
+want to loop through them separately. The `pilots` array contains all arrivals
+and departures.
 
 ### Station attributes
 
@@ -110,6 +122,8 @@ Here's a complete list of the station object attributes that can be accessed:
 * route
 * atis
 * logon
+* latitude
+* longitude
 
 ### Customizing the request
 
@@ -152,6 +166,11 @@ def index
   # to be able to loop through them separately in the view
   @atc = stations[:atc]
   @pilots = stations[:pilots]
+
+  # We can also isolate the departures and/or arrivals for conveneinence if we
+  # want to loop through them separately
+  @departures = stations[:departures]
+  @arrivals = stations[:arrivals]
 end
 ```
 
@@ -176,6 +195,16 @@ end
     = pilot.altitude
     = pilot.groundspeed
     = pilot.remarks
+
+- for arrival in @arrivals
+  %li
+    = arrival.callsign
+    = arrival.name
+
+- for departure in @departures
+  %li
+    = departure.callsign
+    = departure.name
 ```
 
 ### Notes
@@ -196,6 +225,11 @@ current algorithm does not evaluate enroute flights.
 
 ### v. 0.3 - 22 July 2012
 
+* The hash returned by the `vatsim_online` method now includes 2 new arrays:
+`arrivals` and `departures`. These two are returned separately for convenience,
+in case you want to loop through them separately. The `pilots` array return is
+unchanged and contains all arrivals and departures.
+* New station attributes: latitude, longitude
 * Improved UTF-8 conversion process
 
 ### v. 0.2 - 21 July 2012

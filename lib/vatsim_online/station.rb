@@ -2,7 +2,7 @@
 module VatsimTools
   class Station
     attributes = %w{callsign name role frequency altitude groundspeed aircraft
-                 origin destination rating facility remarks route atis logon}
+      origin destination rating facility remarks route atis logon latitude longitude}
     attributes.each {|attribute| attr_accessor attribute.to_sym }
 
 
@@ -22,6 +22,8 @@ module VatsimTools
       @route = station[30]
       @atis = atis_cleaner(station[35]) if station[35]
       @logon = station[37]
+      @latitude = station[5]
+      @longitude = station[6]
     end
 
     def atis_cleaner(raw_atis)
