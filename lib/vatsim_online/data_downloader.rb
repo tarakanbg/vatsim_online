@@ -38,7 +38,7 @@ module VatsimTools
     def create_local_data_file
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
       File.rename data.path, LOCAL_DATA
-      data = Curl::Easy.perform(servers.sample).body_str.gsub(/["]/, '\s').mb_chars.force_encoding('utf-8')
+      data = Curl::Easy.perform(servers.sample).body_str.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
       File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
     end
 

@@ -194,6 +194,10 @@ current algorithm does not evaluate enroute flights.
 
 ## Changelog
 
+### v. 0.3 - 22 July 2012
+
+* Improved UTF-8 conversion process
+
 ### v. 0.2 - 21 July 2012
 
 * Station attribute `departure` is now renamed to `origin`

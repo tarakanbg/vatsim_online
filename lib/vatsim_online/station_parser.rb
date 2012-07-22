@@ -41,9 +41,10 @@ module VatsimTools
     end
 
     def sorted_station_objects
-      atc = []; pilots = []
+      atc = []; pilots = []; arrivals = []; departures = []
       station_objects.each {|sobj| sobj.role == "ATC" ? atc << sobj : pilots << sobj}
-      {:atc => atc, :pilots => pilots}
+      pilots.each {|p| p.origin[0...@icao.length] == @icao ? departures << p : arrivals << p }
+      {:atc => atc, :pilots => pilots, :arrivals => arrivals, :departures => departures}
     end
 
   end
