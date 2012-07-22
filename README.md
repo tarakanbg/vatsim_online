@@ -76,7 +76,8 @@ stations, 2) all matching *pilots* stations, 3) matching *arrivals*, 4) matching
 station **objects**. Each of these objects includes a number of **attributes**:
 
 ```ruby
-icao.vatsim_online # => {:atc => [a1, a2, a3 ...], :pilots => [p1, p2, p3, p4 ...], :departures => [p1, p4 ...], :arrivals => [p2, p3...]}
+icao.vatsim_online # => {:atc => [a1, a2, a3 ...], :pilots => [p1, p2, p3, p4 ...],
+                         :departures => [p1, p4 ...], :arrivals => [p2, p3...]}
 
 icao.vatsim_online[:atc] #=> [a1, a2, a3 ...]
 icao.vatsim_online[:pilots] #=> [p1, p2, p3 ...]
