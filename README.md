@@ -289,7 +289,7 @@ Copyright © 2012 [Svilen Vassilev](http://about.me/svilen)
 *If you find my work useful or time-saving, you can endorse it or buy me a beer:*
 
 [![endorse](http://api.coderwall.com/svilenv/endorse.png)](http://coderwall.com/svilenv)
-[![Donate](https://www.paypalobjects.com/en_US/i/scr/pixel.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FR7AQA4PLD8A)
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FR7AQA4PLD8A)
 
 Released under the [MIT LICENSE](https://github.com/tarakanbg/airdata/blob/master/LICENSE)
 
