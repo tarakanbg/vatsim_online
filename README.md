@@ -139,7 +139,11 @@ Here's a complete list of the station object attributes that can be accessed:
 The `.gcmap` method, available for all pilot stations, returns a great
 circle map image url, depicting the GC route of the aircraft, its origin and destination,
 its current position on the route, together with its current altitude and groundspeed.
-Example picture below.
+Example below:
+
+```ruby
+icao.vatsim_online[:pilots].first.gcmap #=> image url of the map
+```
 
 ![GC Map](http://www.gcmap.com/map?P=kdfw-N44.09780+W58.41483-egll,+%22AAL026%5cn37112+ft%5cn516+kts%22%2b%40N44.09780+W58.41483&MS=wls&MR=540&MX=720x360&PM=*)
 
@@ -217,16 +221,19 @@ end
     = pilot.groundspeed
     = pilot.heading
     = pilot.remarks
+    = image_tag pilot.gcmap
 
 - for arrival in @arrivals
   %li
     = arrival.callsign
     = arrival.name
+    = image_tag arrival.gcmap
 
 - for departure in @departures
   %li
     = departure.callsign
     = departure.name
+    = image_tag departure.gcmap
 ```
 
 ### Notes
