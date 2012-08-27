@@ -132,6 +132,16 @@ Here's a complete list of the station object attributes that can be accessed:
 * `qnh_in` (set QNH in inches Hg)
 * `qnh_mb` (set QNH in milibars/hectopascals)
 * `flight_type` (`I` for IFR, `V` for VFR, etc)
+* `gcmap` (returns a great circle map image url)
+
+### Great circle map visualization
+
+The `.gcmap` method, available for all pilot stations, returns a great
+circle map image url, depicting the GC route of the aircraft, its origin and destination,
+its current position on the route, together with its current altitude and groundspeed.
+Example picture below.
+
+![GC Map](http://www.gcmap.com/map?P=kdfw-N44.09780+W58.41483-egll,+%22AAL026%5cn37112+ft%5cn516+kts%22%2b%40N44.09780+W58.41483&MS=wls&MR=540&MX=720x360&PM=*)
 
 ### Customizing the request
 
@@ -237,6 +247,11 @@ current algorithm does not evaluate enroute flights.
 
 ### v. 0.4 - 27 August 2012
 
+* GCMapper integration: this library now plays nicely with [gcmapper](https://rubygems.org/gems/gcmapper).
+A new attribute is provided for the pilot stations: `.gcmap` which returns a great
+circle map image url, depicting the GC route of the aircraft, its origin and destination,
+its current position on the route, together with its current altitude and groundspeed.
+Look at the example in the README section above.
 * New station attributes: planned_altitude, transponder, heading, qnh_in, qnh_mb,
 flight_type, cid, latitude_humanized, longitude_humanized
 
