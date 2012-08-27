@@ -285,6 +285,7 @@ original Vatsim data is re-encoded
 ## Credits
 
 Copyright © 2012 [Svilen Vassilev](http://about.me/svilen)
+[![endorse](http://api.coderwall.com/svilenv/endorse.png)](http://coderwall.com/svilenv)
 
 Released under the [MIT LICENSE](https://github.com/tarakanbg/airdata/blob/master/LICENSE)
 
