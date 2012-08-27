@@ -286,15 +286,10 @@ original Vatsim data is re-encoded
 
 Copyright © 2012 [Svilen Vassilev](http://about.me/svilen)
 
+*If you find my work useful or time-saving, you can endorse it or buy me a beer:*
+
 [![endorse](http://api.coderwall.com/svilenv/endorse.png)](http://coderwall.com/svilenv)
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="5FR7AQA4PLD8A">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-
+[![Donate](https://www.paypalobjects.com/en_US/i/scr/pixel.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FR7AQA4PLD8A)
 
 Released under the [MIT LICENSE](https://github.com/tarakanbg/airdata/blob/master/LICENSE)
 
