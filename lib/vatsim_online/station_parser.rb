@@ -8,6 +8,7 @@ module VatsimTools
 
     attr_accessor :role
     attr_accessor :icao
+    attr_accessor :excluded
 
     LOCAL_DATA = "#{Dir.tmpdir}/vatsim_data.txt"
 
@@ -15,6 +16,7 @@ module VatsimTools
       VatsimTools::DataDownloader.new
       args.class == Hash ? @role = determine_role(args) : @role = "all"
       @icao = icao.upcase
+      @excluded = args[:exclude].upcase if args && args[:exclude]
     end
 
     def determine_role(args)
@@ -44,6 +46,7 @@ module VatsimTools
       atc = []; pilots = []; arrivals = []; departures = []
       station_objects.each {|sobj| sobj.role == "ATC" ? atc << sobj : pilots << sobj}
       pilots.each {|p| p.origin[0...@icao.length] == @icao ? departures << p : arrivals << p }
+      atc.delete_if {|a| @excluded && a.callsign[0...@excluded.length] == @excluded }
       {:atc => atc, :pilots => pilots, :arrivals => arrivals, :departures => departures}
     end
 

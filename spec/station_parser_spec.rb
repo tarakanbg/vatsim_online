@@ -25,6 +25,13 @@ describe VatsimTools::StationParser do
     end
   end
 
+  describe "excluded list" do
+    it "should not interfere if missing" do
+      args = {:exclude => "loww"}
+      target.new("loww", args).role.should eq("all")
+    end
+  end
+
   describe "stations" do
     args = {:pilots => true, :atc => true}
     it "should return an expected result" do
@@ -112,7 +119,21 @@ describe VatsimTools::StationParser do
       target.new(icao).sorted_station_objects[:arrivals].size.should eq(6)
       target.new(icao).sorted_station_objects[:departures].size.should eq(6)
     end
-  end
 
+    it "should recognize exclusions" do
+      gem_data_file
+      icao = "LB"
+      target.new(icao).sorted_station_objects[:atc].size.should eq(4)
+      args = {:exclude => "LBGO"}
+      target.new(icao, args).excluded.should eq("LBGO")
+      target.new(icao, args).excluded.length.should eq(4)
+      target.new(icao, args).sorted_station_objects[:atc].size.should eq(3)
+      args = {:exclude => "LBSF"}
+      target.new(icao, args).sorted_station_objects[:atc].size.should eq(2)
+      args = {:exclude => "lbsf"}
+      target.new(icao, args).sorted_station_objects[:atc].size.should eq(2)
+    end
+
+  end
 
 end
