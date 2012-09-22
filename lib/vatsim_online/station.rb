@@ -6,7 +6,7 @@ module VatsimTools
     attributes = %w{callsign name role frequency altitude groundspeed aircraft
       origin destination rating facility remarks route atis logon latitude longitude
       planned_altitude transponder heading qnh_in qnh_mb flight_type cid gcmap
-      latitude_humanized longitude_humanized}
+      latitude_humanized longitude_humanized online_since}
     attributes.each {|attribute| attr_accessor attribute.to_sym }
 
 
@@ -38,6 +38,7 @@ module VatsimTools
       @qnh_mb = station[40]
       @flight_type = station[21]
       @gcmap = gcmap_generator
+      @online_since = utc_logon_time
     end
 
   private
@@ -66,6 +67,9 @@ module VatsimTools
       raw_atis.gsub(/[\^]/, '. ')
     end
 
+    def utc_logon_time
+      Time.parse ("#{@logon[0...4]}-#{@logon[4...6]}-#{@logon[6...8]} #{@logon[8...10]}:#{@logon[10...12]}:#{@logon[12...14]} UTC")
+    end
 
   end
 end

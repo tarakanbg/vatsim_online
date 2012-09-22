@@ -53,6 +53,16 @@ describe VatsimTools::Station do
       new_object.longitude.should eq("101.39812")
       new_object.longitude_humanized.should eq("E101.39812")
     end
+
+    it "should parse Ruby time with online_since attr" do
+      gem_data_file
+      icao = "LBWN"
+      station = VatsimTools::StationParser.new(icao).sorted_station_objects[:atc].first
+      station.logon.should eq("20120722091954")
+      station.online_since.class.should eq(Time)
+      station.online_since.utc?.should eq(true)
+      station.online_since.should eq("2012-07-22 09:19:54 UTC")
+    end
   end
 
   describe "pilot object" do
@@ -85,6 +95,9 @@ describe VatsimTools::Station do
       new_object.gcmap.should eq("http://www.gcmap.com/map?P=KDFW-N44.0978+W58.41483-EGLL%2C+\"AAL026%5Cn37210+ft%5Cn543+kts\"%2B%40N44.0978+W58.41483%0d%0a&MS=wls&MR=120&MX=720x360&PM=b:disc7%2b\"%25U%25+%28N\"")
     end
 
+  end
+
+  describe "atc object" do
   end
 
 end

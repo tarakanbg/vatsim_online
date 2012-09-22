@@ -89,6 +89,7 @@ icao.vatsim_online[:pilots].first #=> p1
 a1.callsign #=> "LQSA_TWR"
 a1.frequency #=> "118.25"
 a1.name #=> "Svilen Vassilev"
+a1.online_since #=> "2012-09-22 10:00:48 UTC"
 ...
 
 p1.callsign #=> "ACH217S"
@@ -124,7 +125,8 @@ Here's a complete list of the station object attributes that can be accessed:
 * `facility`
 * `remarks`
 * `atis`
-* `logon` (login time)
+* `logon` (login time as unparsed text string: `20120722091954`)
+* `online_since` (returns the station login time parsed as a Ruby Time object in UTC)
 * `latitude`
 * `longitude`
 * `latitude_humanized` (e.g. N44.09780)
@@ -228,6 +230,7 @@ end
     = atc.frequency
     = atc.rating
     = atc.name
+    = atc.online_since
     = atc.atis
 
 - for pilot in @pilots
@@ -242,6 +245,7 @@ end
     = pilot.groundspeed
     = pilot.heading
     = pilot.remarks
+    = pilot.online_since
     = image_tag pilot.gcmap
 
 - for arrival in @arrivals
@@ -278,6 +282,9 @@ current algorithm does not evaluate enroute flights.
 * New option `:exclude => "ICAO"` allowing further request customization by
 excluding a matching subset of ATC stations from the listing. Read the documentation
 for detailed explanation and examples
+* New customized station attribute: `online_since`. Returns the station login time
+parsed as a Ruby Time object in UTC (zulu time). As opposed to the `logon` attribute
+which returns an unformatted, unparsed string such as `20120722091954`
 
 ### v. 0.4 - 27 August 2012
 
