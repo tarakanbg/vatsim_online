@@ -89,6 +89,7 @@ icao.vatsim_online[:pilots].first #=> p1
 a1.callsign #=> "LQSA_TWR"
 a1.frequency #=> "118.25"
 a1.name #=> "Svilen Vassilev"
+a1.rating #=> "S2"
 a1.online_since #=> "2012-09-22 10:00:48 UTC"
 ...
 
@@ -121,7 +122,7 @@ Here's a complete list of the station object attributes that can be accessed:
 * `origin`
 * `destination`
 * `route`
-* `rating`
+* `rating` (returns a humanized version of the VATSIM rating: S1, S2, S3, C1, etc...)
 * `facility`
 * `remarks`
 * `atis`
@@ -285,6 +286,8 @@ for detailed explanation and examples
 * New customized station attribute: `online_since`. Returns the station login time
 parsed as a Ruby Time object in UTC (zulu time). As opposed to the `logon` attribute
 which returns an unformatted, unparsed string such as `20120722091954`
+* The `rating` station attribute is now humanized not to return just an integer,
+but a readable version of the VATSIM rating, i.e. S1, S2, S3, C1, C3, I1, I3, etc...
 
 ### v. 0.4 - 27 August 2012
 

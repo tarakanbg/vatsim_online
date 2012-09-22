@@ -22,7 +22,7 @@ module VatsimTools
       @aircraft = station[9]
       @origin = station[11]
       @destination = station[13]
-      @rating = station[16]
+      @rating = humanized_rating(station[16])
       @facility = station[18]
       @remarks = station[29]
       @route = station[30]
@@ -69,6 +69,21 @@ module VatsimTools
 
     def utc_logon_time
       Time.parse ("#{@logon[0...4]}-#{@logon[4...6]}-#{@logon[6...8]} #{@logon[8...10]}:#{@logon[10...12]}:#{@logon[12...14]} UTC")
+    end
+
+    def humanized_rating(rating_number)
+      case rating_number
+      when "1" then "P0/OBS"
+      when "2" then "S1"
+      when "3" then "S2"
+      when "4" then "S3"
+      when "5" then "C1"
+      when "7" then "C3"
+      when "8" then "I1"
+      when "10" then "I3"
+      else
+        "UNK"
+      end
     end
 
   end

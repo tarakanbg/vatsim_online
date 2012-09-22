@@ -45,7 +45,7 @@ describe VatsimTools::Station do
       new_object.name.should eq("Adriel Loke")
       new_object.role.should eq("ATC")
       new_object.frequency.should eq("124.200")
-      new_object.rating.should eq("3")
+      new_object.rating.should eq("S2")
       new_object.facility.should eq("5")
       new_object.logon.should eq("20120722092836")
       new_object.latitude.should eq("2.93968")
@@ -62,6 +62,7 @@ describe VatsimTools::Station do
       station.online_since.class.should eq(Time)
       station.online_since.utc?.should eq(true)
       station.online_since.should eq("2012-07-22 09:19:54 UTC")
+      station.rating.should eq("I1")
     end
   end
 
