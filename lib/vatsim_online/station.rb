@@ -6,11 +6,11 @@ module VatsimTools
     attributes = %w{callsign name role frequency altitude groundspeed aircraft
       origin destination rating facility remarks route atis logon latitude longitude
       planned_altitude transponder heading qnh_in qnh_mb flight_type cid gcmap
-      latitude_humanized longitude_humanized online_since}
+      latitude_humanized longitude_humanized online_since gcmap_width gcmap_height}
     attributes.each {|attribute| attr_accessor attribute.to_sym }
 
 
-    def initialize(station)
+    def initialize(station, args = nil)
       @callsign = station[0]
       @cid = station[1]
       @name = station[2]
@@ -39,6 +39,8 @@ module VatsimTools
       @flight_type = station[21]
       @gcmap = gcmap_generator
       @online_since = utc_logon_time
+      @gcmap_width = args[:gcmap_width].to_i if args && args[:gcmap_width]
+      @gcmap_height = args[:gcmap_height].to_i if args && args[:gcmap_height]
     end
 
   private
@@ -50,7 +52,7 @@ module VatsimTools
       route += "-" + @destination
       route += "%2C+\"" + @callsign + "%5Cn" + @altitude + "+ft%5Cn" + @groundspeed + "+kts"
       route += "\"%2B%40" + @latitude_humanized + "+" + @longitude_humanized
-      route.gcmap
+      route.gcmap(:width => @gcmap_width, :height => @gcmap_height)
     end
 
     def latitude_parser(lat)

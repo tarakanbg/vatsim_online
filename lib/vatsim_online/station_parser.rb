@@ -6,9 +6,8 @@ module VatsimTools
     require_relative "data_downloader"
     require_relative "station"
 
-    attr_accessor :role
-    attr_accessor :icao
-    attr_accessor :excluded
+    attributes = %w{role icao excluded gcmap_width gcmap_height}
+    attributes.each {|attribute| attr_accessor attribute.to_sym }
 
     LOCAL_DATA = "#{Dir.tmpdir}/vatsim_data.txt"
 
@@ -17,6 +16,8 @@ module VatsimTools
       args.class == Hash ? @role = determine_role(args) : @role = "all"
       @icao = icao.upcase
       @excluded = args[:exclude].upcase if args && args[:exclude]
+      @gcmap_width = args[:gcmap_width] if args && args[:gcmap_width]
+      @gcmap_height = args[:gcmap_height] if args && args[:gcmap_height]
     end
 
     def determine_role(args)
@@ -38,7 +39,10 @@ module VatsimTools
 
     def station_objects
       station_objects= []
-      stations.each {|station| station_objects << VatsimTools::Station.new(station) }
+      args = {}
+      args[:gcmap_width] = @gcmap_width if @gcmap_width
+      args[:gcmap_height] = @gcmap_height if @gcmap_height
+      stations.each {|station| station_objects << VatsimTools::Station.new(station, args) }
       station_objects
     end
 
