@@ -19,6 +19,8 @@ describe VatsimOnline do
 
       "LO".vatsim_online[:pilots].first.callsign.should eq("AMZ1105")
       "WM".vatsim_online[:atc].first.callsign.should eq("WMKK_APP")
+      "LO".vatsim_online(:gcmap_width => "400", :gcmap_height => "400")[:pilots].first.gcmap.should eq("http://www.gcmap.com/map?P=LOWW-N45.45676+E12.28972-LIPZ%2C+\"AMZ1105%5Cn1007+ft%5Cn128+kts\"%2B%40N45.45676+E12.28972%0d%0a&MS=wls&MR=120&MX=400x400&PM=b:disc7%2b\"%25U%25+%28N\"")
+      "LO".vatsim_online(:gcmap_width => 400, :gcmap_height => 400)[:pilots].first.gcmap.should eq("http://www.gcmap.com/map?P=LOWW-N45.45676+E12.28972-LIPZ%2C+\"AMZ1105%5Cn1007+ft%5Cn128+kts\"%2B%40N45.45676+E12.28972%0d%0a&MS=wls&MR=120&MX=400x400&PM=b:disc7%2b\"%25U%25+%28N\"")
     end
 
     it "should be case insensitive" do
@@ -107,6 +109,7 @@ describe VatsimTools::Station do
       new_object.gcmap_width.should eq(400)
       new_object.gcmap_height.should eq(400)
       new_object.gcmap.should eq("http://www.gcmap.com/map?P=KDFW-N44.0978+W58.41483-EGLL%2C+\"AAL026%5Cn37210+ft%5Cn543+kts\"%2B%40N44.0978+W58.41483%0d%0a&MS=wls&MR=120&MX=400x400&PM=b:disc7%2b\"%25U%25+%28N\"")
+
     end
 
   end

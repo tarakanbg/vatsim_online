@@ -150,6 +150,17 @@ icao.vatsim_online[:pilots].first.gcmap #=> image url of the map
 
 ![GC Map](http://www.gcmap.com/map?P=kdfw-N44.09780+W58.41483-egll,+%22AAL026%5cn37112+ft%5cn516+kts%22%2b%40N44.09780+W58.41483&MS=wls&MR=540&MX=720x360&PM=*)
 
+The map size (width and height) **can be customized** by passing an optional hash
+of arguments to the `vatsim_online` method like this:
+
+```ruby
+icao.vatsim_online(:gcmap_width => "400", :gcmap_height => "400")[:pilots].first.gcmap #=> image url of the map
+
+# The quotes are optional, so the statement can also be written like this:
+icao.vatsim_online(:gcmap_width => 400, :gcmap_height => 400)[:pilots].first.gcmap
+```
+![GC Map](http://www.gcmap.com/map?P=kdfw-N44.09780+W58.41483-egll,+%22AAL026%5cn37112+ft%5cn516+kts%22%2b%40N44.09780+W58.41483&MS=wls&MR=540&MX=400x400&PM=*)
+
 ### Customizing the request
 
 The `vatsim online` method can be customized by passing in a hash-style collection
@@ -159,6 +170,8 @@ of arguments. The currently supported arguments and their defaults are:
 :atc => true     # Possible values: true, false. Default: true
 :pilots => true  # Possible values: true, false. Default: true
 :exclude => "ICAO" # Accepts any full or partial ICAO code to be excluded from the ATC stations
+:gcmap_width => integer # Optional parameter customizing the width of the station's `.gcmap`
+:gcmap_height => integer # Optional parameter customizing the height of the station's `.gcmap`
 ```
 #### ATC exclusions
 
@@ -288,6 +301,9 @@ parsed as a Ruby Time object in UTC (zulu time). As opposed to the `logon` attri
 which returns an unformatted, unparsed string such as `20120722091954`
 * The `rating` station attribute is now humanized not to return just an integer,
 but a readable version of the VATSIM rating, i.e. S1, S2, S3, C1, C3, I1, I3, etc...
+* Added the possibility of customizing the great circle maps by optionally passing
+parameters for width and height: `icao.vatsim_online(:gcmap_width => 400, :gcmap_height => 400)`.
+Read the documentation for detailed explanation and examples
 
 ### v. 0.4 - 27 August 2012
 

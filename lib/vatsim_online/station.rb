@@ -37,10 +37,10 @@ module VatsimTools
       @qnh_in = station[39]
       @qnh_mb = station[40]
       @flight_type = station[21]
-      @gcmap = gcmap_generator
       @online_since = utc_logon_time
       @gcmap_width = args[:gcmap_width].to_i if args && args[:gcmap_width]
       @gcmap_height = args[:gcmap_height].to_i if args && args[:gcmap_height]
+      @gcmap = gcmap_generator
     end
 
   private
