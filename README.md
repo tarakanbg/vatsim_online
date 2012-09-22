@@ -150,8 +150,8 @@ icao.vatsim_online[:pilots].first.gcmap #=> image url of the map
 
 ![GC Map](http://www.gcmap.com/map?P=kdfw-N44.09780+W58.41483-egll,+%22AAL026%5cn37112+ft%5cn516+kts%22%2b%40N44.09780+W58.41483&MS=wls&MR=540&MX=720x360&PM=*)
 
-The map size (width and height) **can be customized** by passing an optional hash
-of arguments to the `vatsim_online` method like this:
+The map size (width and height) and scale **can be customized** by passing an
+optional hash of arguments to the `vatsim_online` method like this:
 
 ```ruby
 icao.vatsim_online(:gcmap_width => "400", :gcmap_height => "400")[:pilots].first.gcmap #=> image url of the map
@@ -291,7 +291,7 @@ current algorithm does not evaluate enroute flights.
 
 ## Changelog
 
-### v. 0.5 - 21 September 2012
+### v. 0.5 - 23 September 2012
 
 * New option `:exclude => "ICAO"` allowing further request customization by
 excluding a matching subset of ATC stations from the listing. Read the documentation
