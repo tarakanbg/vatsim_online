@@ -22,6 +22,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "guard-rspec"
   gem.add_dependency "curb", "~> 0.8.1"
   gem.add_dependency "time_diff", "~> 0.2.2"
-  gem.add_dependency "gcmapper", "~> 0.3"
+  gem.add_dependency "gcmapper", "~> 0.3.1"
 end
 
