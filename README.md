@@ -308,7 +308,7 @@ Read the documentation for detailed explanation and examples
 * New customized station attribute `atis_message`. It will return a humanized web safe
 version of the ATC atis without the voice server info and with lines split with
 `<br />` tags. As opposed to the original `atis` attribute, which returns raw atis,
-as reported from VATSIM, including voice server as first line/
+as reported from VATSIM, including voice server as first line
 
 ### v. 0.4 - 27 August 2012
 
