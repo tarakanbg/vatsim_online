@@ -115,6 +115,15 @@ describe VatsimTools::Station do
   end
 
   describe "atc object" do
+    it "should handle regular and humanized atis" do
+      gem_data_file
+      icao = "LBWN"
+      station = VatsimTools::StationParser.new(icao).sorted_station_objects[:atc].first
+      station.logon.should eq("20120722091954")
+      station.rating.should eq("I1")
+      station.atis.should eq("$ voice2.vacc-sag.org/lfmn_app. Nice Approach. Charts at www.tinyurl.com/chartsfr. Visit www.vatfrance.org")
+      station.atis_message.should eq("Nice Approach<br />Charts at www.tinyurl.com/chartsfr<br />Visit www.vatfrance.org")
+    end
   end
 
 end

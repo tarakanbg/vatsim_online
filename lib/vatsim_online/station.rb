@@ -6,7 +6,8 @@ module VatsimTools
     attributes = %w{callsign name role frequency altitude groundspeed aircraft
       origin destination rating facility remarks route atis logon latitude longitude
       planned_altitude transponder heading qnh_in qnh_mb flight_type cid gcmap
-      latitude_humanized longitude_humanized online_since gcmap_width gcmap_height}
+      latitude_humanized longitude_humanized online_since gcmap_width gcmap_height
+      atis_message}
     attributes.each {|attribute| attr_accessor attribute.to_sym }
 
 
@@ -41,6 +42,7 @@ module VatsimTools
       @gcmap_width = args[:gcmap_width].to_i if args && args[:gcmap_width]
       @gcmap_height = args[:gcmap_height].to_i if args && args[:gcmap_height]
       @gcmap = gcmap_generator
+      @atis_message = construct_atis_message(station[35]) if station[35]
     end
 
   private
@@ -86,6 +88,11 @@ module VatsimTools
       else
         "UNK"
       end
+    end
+
+    def construct_atis_message(raw_atis)
+      message = raw_atis.gsub(/[\^]/, '<br />')
+      message = message[message.index('>')+1...message.length]
     end
 
   end

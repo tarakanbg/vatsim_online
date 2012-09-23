@@ -125,7 +125,8 @@ Here's a complete list of the station object attributes that can be accessed:
 * `rating` (returns a humanized version of the VATSIM rating: S1, S2, S3, C1, etc...)
 * `facility`
 * `remarks`
-* `atis`
+* `atis` (raw atis, as reported from VATSIM, including voice server as first line)
+* `atis_message` (a humanized version of the ATC atis w/o server and with lines split)
 * `logon` (login time as unparsed text string: `20120722091954`)
 * `online_since` (returns the station login time parsed as a Ruby Time object in UTC)
 * `latitude`
@@ -245,7 +246,7 @@ end
     = atc.rating
     = atc.name
     = atc.online_since
-    = atc.atis
+    = atc.atis_message
 
 - for pilot in @pilots
   %li
@@ -304,6 +305,10 @@ but a readable version of the VATSIM rating, i.e. S1, S2, S3, C1, C3, I1, I3, et
 * Added the possibility of customizing the great circle maps by optionally passing
 parameters for width and height: `icao.vatsim_online(:gcmap_width => 400, :gcmap_height => 400)`.
 Read the documentation for detailed explanation and examples
+* New customized station attribute `atis_message`. It will return a humanized web safe
+version of the ATC atis without the voice server info and with lines split with
+`<br />` tags. As opposed to the original `atis` attribute, which returns raw atis,
+as reported from VATSIM, including voice server as first line/
 
 ### v. 0.4 - 27 August 2012
 
