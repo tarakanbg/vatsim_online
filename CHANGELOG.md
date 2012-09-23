@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### v. 0.5.1 - 23 September 2012
+
+* bugfixes
+
 ### v. 0.5 - 23 September 2012
 
 * New option `:exclude => "ICAO"` allowing further request customization by
