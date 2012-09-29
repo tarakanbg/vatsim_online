@@ -16,6 +16,7 @@ module VatsimTools
       status = Tempfile.new('vatsim_status')
       File.rename status.path, LOCAL_STATUS
       File.open(LOCAL_STATUS, "w+") {|f| f.write(Curl::Easy.perform(STATUS_URL).body_str) }
+      File.chmod(0777, LOCAL_STATUS)
     end
 
     def read_status_tempfile
@@ -40,6 +41,7 @@ module VatsimTools
       File.rename data.path, LOCAL_DATA
       data = Curl::Easy.perform(servers.sample).body_str.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
       File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
+      File.chmod(0777, LOCAL_DATA)
     end
 
     def read_local_datafile

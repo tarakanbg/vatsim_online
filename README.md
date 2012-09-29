@@ -292,6 +292,10 @@ current algorithm does not evaluate enroute flights.
 
 ## Changelog
 
+### v. 0.5.2 - 29 September 2012
+
+* fixed permissions bug on UNIX systems
+
 ### v. 0.5.1 - 23 September 2012
 
 * bugfixes
