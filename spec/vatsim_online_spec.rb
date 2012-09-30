@@ -124,6 +124,14 @@ describe VatsimTools::Station do
       station.atis.should eq("$ voice2.vacc-sag.org/lfmn_app. Nice Approach. Charts at www.tinyurl.com/chartsfr. Visit www.vatfrance.org")
       station.atis_message.should eq("Nice Approach<br />Charts at www.tinyurl.com/chartsfr<br />Visit www.vatfrance.org")
     end
+
+     it "should handle no ATC remark" do
+      gem_data_file
+      icao = "NZAA"
+      station = VatsimTools::StationParser.new(icao).sorted_station_objects[:atc].first
+      station.atis.should eq("$ rw1.vatpac.org/nzaa_twr")
+      station.atis_message.should eq("No published remark")
+    end
   end
 
 end

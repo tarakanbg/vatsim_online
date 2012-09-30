@@ -92,7 +92,7 @@ module VatsimTools
 
     def construct_atis_message(raw_atis)
       message = raw_atis.gsub(/[\^]/, '<br />')
-      message = message[message.index('>')+1...message.length]
+      message.index('>') ? message = message[message.index('>')+1...message.length] : message = "No published remark"
     end
 
   end

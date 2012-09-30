@@ -292,6 +292,10 @@ current algorithm does not evaluate enroute flights.
 
 ## Changelog
 
+### v. 0.5.3 - 30 September 2012
+
+* fixed bug with exceptions on missing ATC remark
+
 ### v. 0.5.2 - 29 September 2012
 
 * fixed permissions bug on UNIX systems
