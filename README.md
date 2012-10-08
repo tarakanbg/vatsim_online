@@ -32,8 +32,8 @@ Or install it yourself as:
 
 This gem provides one public method: `vatsim_online`, which can be applied to
 any string (or variable containing a string) representing a full or partial ICAO
-code. The provided ICAO code or fragment will be used as a search criteria and
-matched against the current vatsim data.
+code or a comma-separated list of ICAO codes. The provided ICAO code or fragment
+will be used as a search criteria and matched against the current vatsim data.
 
 For example if you want to retrieve all active stations (ATC positions and pilots)
 for Vienna airport (ICAO: LOWW), then you can use:
@@ -41,6 +41,9 @@ for Vienna airport (ICAO: LOWW), then you can use:
 ```ruby
 # Attaching the method directly to a string:
 "LOWW".vatsim_online
+
+# Attaching the method directly to a list of ICAOs:
+"LOWW, LOWK".vatsim_online
 
 # Attaching the method to a variable containing a string:
 icao = "LOWW"
@@ -59,7 +62,12 @@ airports and ATC station callsigns start with `"LO"`:
 # Attaching the method to a variable containing a string:
 icao = "LO"
 icao.vatsim_online
+
+# Attaching the method to a list of ICAOs:
+icao = "LO, LB"
+icao.vatsim_online
 ```
+
 When parsing the pilot stations for particular airport or area, the library will
 return the pilots that are flying **to or from** the given area or airport,
 not the current enroute stations. The discovery algorithm is based on **origin
@@ -289,8 +297,22 @@ libraries too.
 * The ICAO string used as a search criteria **is not** case sensitive
 * Pilot stations returned are based on origin and destination airports, the
 current algorithm does not evaluate enroute flights.
+* When attaching the `vatsim_online` method to a comma-separated list of full or
+partial ICAO identifiers it does not matter whether there will be any spaces in
+front or after the identifiers or the commas, i.e. you can use
+`"LO,LB".vatsim_online` or `"LO, LB".vatsim_online` or `"LO , LB".vatsim_online` with
+the same result.
 
 ## Changelog
+
+### v. 0.6.0 - 08 October 2012
+
+* The `vatsim_online` method now also supports a comma-separated list of full or
+partial ICAO codes like this: `"LO,LB".vatsim_online`. This allows you to pull the
+information for multiple airports or FIRs in a single request
+* The comma-seprated list is not sensitive to whitespace, meaning you can use
+`"LO,LB".vatsim_online` or `"LO, LB".vatsim_online` or `"LO , LB".vatsim_online` with
+the same result
 
 ### v. 0.5.3 - 30 September 2012
 

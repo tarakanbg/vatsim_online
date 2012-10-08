@@ -2,6 +2,15 @@
 
 ## Changelog
 
+### v. 0.6.0 - 08 October 2012
+
+* The `vatsim_online` method now also supports a comma-separated list of full or
+partial ICAO codes like this: `"LO,LB".vatsim_online`. This allows you to pull the
+information for multiple airports or FIRs in a single request
+* The comma-seprated list is not sensitive to whitespace, meaning you can use
+`"LO,LB".vatsim_online` or `"LO, LB".vatsim_online` or `"LO , LB".vatsim_online` with
+the same result
+
 ### v. 0.5.3 - 30 September 2012
 
 * fixed bug with exceptions on missing ATC remark

@@ -14,7 +14,7 @@ module VatsimTools
     def initialize(icao, args = nil)
       VatsimTools::DataDownloader.new
       args.class == Hash ? @role = determine_role(args) : @role = "all"
-      @icao = icao.upcase
+      @icao = icao.upcase.split(',').each {|s| s.strip!}
       @excluded = args[:exclude].upcase if args && args[:exclude]
       @gcmap_width = args[:gcmap_width] if args && args[:gcmap_width]
       @gcmap_height = args[:gcmap_height] if args && args[:gcmap_height]
@@ -31,8 +31,10 @@ module VatsimTools
       stations = []
       CSV.foreach(LOCAL_DATA, :col_sep =>':') do |row|
         callsign, origin, destination, client = row[0].to_s, row[11].to_s, row[13].to_s, row[3].to_s
-        stations << row if (callsign[0...@icao.length] == @icao && client == "ATC") unless @role == "pilot"
-        stations << row if (origin[0...@icao.length] == @icao || destination[0...@icao.length] == @icao) unless @role == "atc"
+        for icao in @icao
+          stations << row if (callsign[0...icao.length] == icao && client == "ATC") unless @role == "pilot"
+          stations << row if (origin[0...icao.length] == icao || destination[0...icao.length] == icao) unless @role == "atc"
+        end
       end
       stations
     end
@@ -49,7 +51,9 @@ module VatsimTools
     def sorted_station_objects
       atc = []; pilots = []; arrivals = []; departures = []
       station_objects.each {|sobj| sobj.role == "ATC" ? atc << sobj : pilots << sobj}
-      pilots.each {|p| p.origin[0...@icao.length] == @icao ? departures << p : arrivals << p }
+      for icao in @icao
+        pilots.each {|p| p.origin[0...icao.length] == icao ? departures << p : arrivals << p }
+      end
       atc.delete_if {|a| @excluded && a.callsign[0...@excluded.length] == @excluded }
       {:atc => atc, :pilots => pilots, :arrivals => arrivals, :departures => departures}
     end

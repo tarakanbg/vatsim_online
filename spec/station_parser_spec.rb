@@ -134,6 +134,26 @@ describe VatsimTools::StationParser do
       target.new(icao, args).sorted_station_objects[:atc].size.should eq(2)
     end
 
+    it "should support multiple icaos" do
+      gem_data_file
+      icao = "LB"
+      target.new(icao).sorted_station_objects[:atc].size.should eq(4)
+      target.new(icao).sorted_station_objects[:pilots].size.should eq(2)
+      icao = "LO"
+      target.new(icao).sorted_station_objects[:pilots].size.should eq(12)
+      target.new(icao).sorted_station_objects[:atc].size.should eq(0)
+      gem_data_file
+      icao = "LO,LB"
+      target.new(icao).sorted_station_objects[:pilots].size.should eq(14)
+      target.new(icao).sorted_station_objects[:atc].size.should eq(4)
+      icao = "LO, LB"
+      target.new(icao).sorted_station_objects[:pilots].size.should eq(14)
+      target.new(icao).sorted_station_objects[:atc].size.should eq(4)
+      icao = "LO , LB"
+      target.new(icao).sorted_station_objects[:pilots].size.should eq(14)
+      target.new(icao).sorted_station_objects[:atc].size.should eq(4)
+    end
+
   end
 
 end
