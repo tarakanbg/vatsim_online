@@ -151,6 +151,8 @@ describe VatsimTools::StationParser do
       target.new(icao).sorted_station_objects[:atc].size.should eq(4)
       icao = "LO , LB"
       target.new(icao).sorted_station_objects[:pilots].size.should eq(14)
+      target.new(icao).sorted_station_objects[:arrivals].size.should eq(7)
+      target.new(icao).sorted_station_objects[:departures].size.should eq(7)
       target.new(icao).sorted_station_objects[:atc].size.should eq(4)
     end
 

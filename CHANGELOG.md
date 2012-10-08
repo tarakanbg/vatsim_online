@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### v. 0.6.1 - 08 October 2012
+
+* Fixed pilot station duplication issue when using multiple ICAOs
+
 ### v. 0.6.0 - 08 October 2012
 
 * The `vatsim_online` method now also supports a comma-separated list of full or

@@ -52,7 +52,10 @@ module VatsimTools
       atc = []; pilots = []; arrivals = []; departures = []
       station_objects.each {|sobj| sobj.role == "ATC" ? atc << sobj : pilots << sobj}
       for icao in @icao
-        pilots.each {|p| p.origin[0...icao.length] == icao ? departures << p : arrivals << p }
+        for pilot in pilots
+          departures << pilot if pilot.origin[0...icao.length] == icao
+          arrivals << pilot if pilot.destination[0...icao.length] == icao
+        end
       end
       atc.delete_if {|a| @excluded && a.callsign[0...@excluded.length] == @excluded }
       {:atc => atc, :pilots => pilots, :arrivals => arrivals, :departures => departures}
