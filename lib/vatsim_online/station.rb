@@ -12,32 +12,17 @@ module VatsimTools
 
 
     def initialize(station, args = nil)
-      @callsign = station[0]
-      @cid = station[1]
-      @name = station[2]
-      @role = station[3]
-      @frequency = station[4]
-      @altitude = station[7]
-      @planned_altitude = station[12]
-      @groundspeed = station[8]
-      @aircraft = station[9]
-      @origin = station[11]
-      @destination = station[13]
-      @rating = humanized_rating(station[16])
-      @facility = station[18]
-      @remarks = station[29]
-      @route = station[30]
+
+      @callsign, @cid,  @name, @role, @frequency, @latitude, @longitude,  @altitude, @groundspeed, @aircraft, @origin,
+        @planned_altitude, @destination, @transponder, @facility, @flight_type, @remarks, @route, @logon, @heading,
+        @qnh_in, @qnh_mb = station[0], station[1], station[2], station[3], station[4], station[5], station[6], station[7],
+        station[8], station[9], station[11], station[12], station[13], station[17], station[18], station[21], station[29],
+        station[30], station[37], station[38], station[39], station[40]
+
       @atis = atis_cleaner(station[35]) if station[35]
-      @logon = station[37]
-      @latitude = station[5]
+      @rating = humanized_rating(station[16])
       @latitude_humanized = latitude_parser(station[5].to_f)
-      @longitude = station[6]
       @longitude_humanized = longitude_parser(station[6].to_f)
-      @transponder = station[17]
-      @heading = station[38]
-      @qnh_in = station[39]
-      @qnh_mb = station[40]
-      @flight_type = station[21]
       @online_since = utc_logon_time if @logon
       @gcmap_width = args[:gcmap_width].to_i if args && args[:gcmap_width]
       @gcmap_height = args[:gcmap_height].to_i if args && args[:gcmap_height]
@@ -49,12 +34,13 @@ module VatsimTools
 
     def gcmap_generator
       return "No map for ATC stations" if @role != "PILOT"
-      route = @origin
-      route += "-" + @latitude_humanized + "+" + @longitude_humanized
-      route += "-" + @destination
+      construct_gcmap_url.gcmap(:width => @gcmap_width, :height => @gcmap_height)
+    end
+
+    def construct_gcmap_url
+      route = @origin + "-" + @latitude_humanized + "+" + @longitude_humanized + "-" + @destination
       route += "%2C+\"" + @callsign + "%5Cn" + @altitude + "+ft%5Cn" + @groundspeed + "+kts"
       route += "\"%2B%40" + @latitude_humanized + "+" + @longitude_humanized
-      route.gcmap(:width => @gcmap_width, :height => @gcmap_height)
     end
 
     def latitude_parser(lat)

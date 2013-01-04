@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### v. 0.6.2 - 4 January 2013
+
+* updated gem dependencies
+* refactored `Station` class for simplicity
+
 ### v. 0.6.1 - 08 October 2012
 
 * Fixed pilot station duplication issue when using multiple ICAOs

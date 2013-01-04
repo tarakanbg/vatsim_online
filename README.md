@@ -305,6 +305,11 @@ the same result.
 
 ## Changelog
 
+### v. 0.6.2 - 4 January 2013
+
+* updated gem dependencies
+* refactored `Station` class for simplicity
+
 ### v. 0.6.1 - 08 October 2012
 
 * Fixed pilot station duplication issue when using multiple ICAOs
@@ -389,9 +394,9 @@ original Vatsim data is re-encoded
 
 Copyright © 2012 [Svilen Vassilev](http://about.me/svilen)
 
-*If you find my work useful or time-saving, you can endorse it or buy me a beer:*
+*If you find my work useful or time-saving, you can endorse it or buy me a cup of coffee:*
 
-[![endorse](http://api.coderwall.com/svilenv/endorse.png)](http://coderwall.com/svilenv)
+[![endorse](http://api.coderwall.com/svilenv/endorsecount.png)](http://coderwall.com/svilenv)
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FR7AQA4PLD8A)
 
 Released under the [MIT LICENSE](https://github.com/tarakanbg/vatsim_online/blob/master/LICENSE)
