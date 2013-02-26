@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### v. 0.7.0 - 26 February 2013
+
+* added Ruby 2.0 support
+
 ### v. 0.6.2 - 4 January 2013
 
 * updated gem dependencies

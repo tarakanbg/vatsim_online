@@ -10,7 +10,6 @@ module VatsimTools
       atis_message}
     attributes.each {|attribute| attr_accessor attribute.to_sym }
 
-
     def initialize(station, args = nil)
 
       @callsign, @cid,  @name, @role, @frequency, @latitude, @longitude,  @altitude, @groundspeed, @aircraft, @origin,

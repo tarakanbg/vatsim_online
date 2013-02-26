@@ -7,13 +7,13 @@ returned as objects, exposing a rich set of attributes. Vatsim data is pulled
 on preset intervals and cached locally to avoid flooding the servers.
 
 [![Build Status](https://secure.travis-ci.org/tarakanbg/vatsim_online.png?branch=master)](http://travis-ci.org/tarakanbg/vatsim_online)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/tarakanbg/vatsim_online)
 [![Gemnasium](https://gemnasium.com/tarakanbg/vatsim_online.png?travis)](https://gemnasium.com/tarakanbg/vatsim_online)
 [![Gem Version](https://badge.fury.io/rb/vatsim_online.png)](http://badge.fury.io/rb/vatsim_online)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/tarakanbg/vatsim_online)
 
 ## Requirements
 
-[Ruby 1.9.3](http://www.ruby-lang.org/en/downloads/) or higher
+[Ruby 1.9.3](http://www.ruby-lang.org/en/downloads/) or higher | **Supports Ruby 2.0!**
 
 ## Installation
 
@@ -142,8 +142,8 @@ Here's a complete list of the station object attributes that can be accessed:
 * `longitude`
 * `latitude_humanized` (e.g. N44.09780)
 * `longitude_humanized` (e.g. W58.41483)
-* `qnh_in` (set QNH in inches Hg)
-* `qnh_mb` (set QNH in milibars/hectopascals)
+* `qnh_in` (indicated QNH in inches Hg)
+* `qnh_mb` (indicated QNH in milibars/hectopascals)
 * `flight_type` (`I` for IFR, `V` for VFR, etc)
 * `gcmap` (returns a great circle map image url)
 
@@ -306,6 +306,10 @@ the same result.
 
 ## Changelog
 
+### v. 0.7.0 - 26 February 2013
+
+* added Ruby 2.0 support
+
 ### v. 0.6.2 - 4 January 2013
 
 * updated gem dependencies
@@ -393,7 +397,7 @@ original Vatsim data is re-encoded
 
 ## Credits
 
-Copyright © 2012 [Svilen Vassilev](http://about.me/svilen)
+Copyright © 2013 [Svilen Vassilev](http://svilen.rubystudio.net)
 
 *If you find my work useful or time-saving, you can endorse it or buy me a cup of coffee:*
 
