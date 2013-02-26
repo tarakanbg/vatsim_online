@@ -9,7 +9,7 @@ on preset intervals and cached locally to avoid flooding the servers.
 [![Build Status](https://secure.travis-ci.org/tarakanbg/vatsim_online.png?branch=master)](http://travis-ci.org/tarakanbg/vatsim_online)
 [![Gemnasium](https://gemnasium.com/tarakanbg/vatsim_online.png?travis)](https://gemnasium.com/tarakanbg/vatsim_online)
 [![Gem Version](https://badge.fury.io/rb/vatsim_online.png)](http://badge.fury.io/rb/vatsim_online)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/tarakanbg/vatsim_online)
+[![Code Climate](https://codeclimate.com/github/tarakanbg/vatsim_online.png)](https://codeclimate.com/github/tarakanbg/vatsim_online)
 
 ## Requirements
 
