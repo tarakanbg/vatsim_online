@@ -64,7 +64,7 @@ describe VatsimTools::Station do
       station.online_since.class.should eq(Time)
       station.online_since.utc?.should eq(true)
       station.online_since.should eq("2012-07-22 09:19:54 UTC")
-      station.rating.should eq("I1")
+      station.rating.should eq("INS")
     end
   end
 
@@ -120,7 +120,7 @@ describe VatsimTools::Station do
       icao = "LBWN"
       station = VatsimTools::StationParser.new(icao).sorted_station_objects[:atc].first
       station.logon.should eq("20120722091954")
-      station.rating.should eq("I1")
+      station.rating.should eq("INS")
       station.atis.should eq("$ voice2.vacc-sag.org/lfmn_app. Nice Approach. Charts at www.tinyurl.com/chartsfr. Visit www.vatfrance.org")
       station.atis_message.should eq("Nice Approach<br />Charts at www.tinyurl.com/chartsfr<br />Visit www.vatfrance.org")
     end

@@ -62,16 +62,19 @@ module VatsimTools
 
     def humanized_rating(rating_number)
       case rating_number
-      when "1" then "P0/OBS"
-      when "2" then "S1"
-      when "3" then "S2"
-      when "4" then "S3"
-      when "5" then "C1"
-      when "7" then "C3"
-      when "8" then "I1"
-      when "10" then "I3"
-      else
-        "UNK"
+        when "0" then "Suspended"
+        when "1" then "OBS"
+        when "2" then "S1"
+        when "3" then "S2"
+        when "4" then "S3"
+        when "5" then "C1"
+        when "7" then "C3"
+        when "8" then "INS"
+        when "10" then "INS+"
+        when "11" then "Supervisor"
+        when "12" then "Administrator"
+        else
+          "UNK"
       end
     end
 
