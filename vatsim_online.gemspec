@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "vatsim_online"
   gem.require_paths = ["lib"]
   gem.version       = VatsimOnline::VERSION
+  gem.license       = 'MIT'
 
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "rake"

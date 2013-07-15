@@ -306,6 +306,10 @@ the same result.
 
 ## Changelog
 
+### v. 0.7.2 - 15 July 2013
+
+* added gemspec license declaration
+
 ### v. 0.7.1 - 15 July 2013
 
 * more comprehensive ATC ratings list
