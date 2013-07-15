@@ -306,6 +306,11 @@ the same result.
 
 ## Changelog
 
+### v. 0.7.1 - 15 July 2013
+
+* more comprehensive ATC ratings list
+* dependencies updated
+
 ### v. 0.7.0 - 26 February 2013
 
 * added Ruby 2.0 support
