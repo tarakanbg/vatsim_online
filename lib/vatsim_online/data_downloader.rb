@@ -82,20 +82,30 @@ module VatsimTools
     end
 
     def gem_data_file
-      path = File.realpath("lib/vatsim_online/vatsim_data.txt")
-      gem_data = File.open(path, :encoding => 'iso-8859-15').read
-      data = Tempfile.new('vatsim_data', :encoding => 'iso-8859-15')
-      data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
-      File.rename data.path, "#{Dir.tmpdir}/vatsim_data.txt"
+      # path = File.realpath("lib/vatsim_online/vatsim_data.txt")
+      # gem_data = File.open(path, :encoding => 'iso-8859-15').read
+      # data = Tempfile.new('vatsim_data', :encoding => 'iso-8859-15')
+      # data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
+      # File.rename data.path, "#{Dir.tmpdir}/vatsim_data.txt"
+
+      source = File.join(Gem.loaded_specs["vatsim_online"].full_gem_path, "spec", "vatsim_data.txt")
+      target = "#{Dir.tmpdir}/vatsim_data.txt"
+      FileUtils.cp_r source, target
+
       File.chmod(0777, LOCAL_DATA)
     end
 
     def dummy_status
-      path = File.realpath("lib/vatsim_online/vatsim_status.txt")
-      gem_data = File.open(path, :encoding => 'iso-8859-15').read
-      data = Tempfile.new('vatsim_status', :encoding => 'iso-8859-15')
-      data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
-      File.rename data.path, "#{Dir.tmpdir}/vatsim_status.txt"
+      # path = File.realpath("lib/vatsim_online/vatsim_status.txt")
+      # gem_data = File.open(path, :encoding => 'iso-8859-15').read
+      # data = Tempfile.new('vatsim_status', :encoding => 'iso-8859-15')
+      # data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
+      # File.rename data.path, "#{Dir.tmpdir}/vatsim_status.txt"
+
+      source = File.join(Gem.loaded_specs["vatsim_online"].full_gem_path, "spec", "vatsim_status.txt")
+      target = "#{Dir.tmpdir}/vatsim_status.txt"
+      FileUtils.cp_r source, target
+
       File.chmod(0777, LOCAL_STATUS)
     end
 
