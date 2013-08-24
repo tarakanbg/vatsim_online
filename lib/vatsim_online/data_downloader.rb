@@ -26,6 +26,10 @@ module VatsimTools
       dummy_status
     rescue Curl::Err::TimeoutError
       dummy_status
+    rescue 
+      dummy_status
+    rescue Exception
+      dummy_status  
     end
 
     def read_status_tempfile
@@ -60,6 +64,10 @@ module VatsimTools
       gem_data_file
     rescue Curl::Err::TimeoutError
       gem_data_file
+    rescue
+      gem_data_file
+    rescue Exception
+      gem_data_file    
     end
 
     def read_local_datafile
@@ -74,7 +82,7 @@ module VatsimTools
     end
 
     def gem_data_file
-      path = File.realpath("/spec/vatsim_data.txt")
+      path = File.realpath("lib/vatsim_online/vatsim_data.txt")
       gem_data = File.open(path, :encoding => 'iso-8859-15').read
       data = Tempfile.new('vatsim_data', :encoding => 'iso-8859-15')
       data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
@@ -83,7 +91,7 @@ module VatsimTools
     end
 
     def dummy_status
-      path = File.realpath("/spec/vatsim_status.txt")
+      path = File.realpath("lib/vatsim_online/vatsim_status.txt")
       gem_data = File.open(path, :encoding => 'iso-8859-15').read
       data = Tempfile.new('vatsim_status', :encoding => 'iso-8859-15')
       data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
