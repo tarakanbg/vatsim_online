@@ -13,10 +13,19 @@ module VatsimTools
     end
 
     def create_status_tempfile
+      curl = Curl::Easy.new(STATUS_URL)
+      curl.timeout = 5
+      curl.perform
+      curl = curl.body_str
       status = Tempfile.new('vatsim_status')
       File.rename status.path, LOCAL_STATUS
-      File.open(LOCAL_STATUS, "w+") {|f| f.write(Curl::Easy.perform(STATUS_URL).body_str) }
+      File.open(LOCAL_STATUS, "w+") {|f| f.write(curl) }
       File.chmod(0777, LOCAL_STATUS)
+      dummy_status if curl.include? "<html><head>"
+    rescue Curl::Err::HostResolutionError
+      dummy_status
+    rescue Curl::Err::TimeoutError
+      dummy_status
     end
 
     def read_status_tempfile
@@ -37,11 +46,20 @@ module VatsimTools
     end
 
     def create_local_data_file
+      curl = Curl::Easy.new(servers.sample)
+      curl.timeout = 5
+      curl.perform
+      curl = curl.body_str
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
       File.rename data.path, LOCAL_DATA
-      data = Curl::Easy.perform(servers.sample).body_str.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
+      data = curl.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
       File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
       File.chmod(0777, LOCAL_DATA)
+      gem_data_file if curl.include? "<html><head>"
+    rescue Curl::Err::HostResolutionError
+      gem_data_file
+    rescue Curl::Err::TimeoutError
+      gem_data_file
     end
 
     def read_local_datafile
@@ -50,10 +68,29 @@ module VatsimTools
       difference > 2 ? create_local_data_file : data.read
     end
 
-    def data_file
+    def data_file      
       File.exists?(LOCAL_DATA) ? read_local_datafile : create_local_data_file
-      LOCAL_DATA
+      LOCAL_DATA    
     end
+
+    def gem_data_file
+      path = File.realpath("spec/vatsim_data.txt")
+      gem_data = File.open(path, :encoding => 'iso-8859-15').read
+      data = Tempfile.new('vatsim_data', :encoding => 'iso-8859-15')
+      data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
+      File.rename data.path, "#{Dir.tmpdir}/vatsim_data.txt"
+      File.chmod(0777, LOCAL_DATA)
+    end
+
+    def dummy_status
+      path = File.realpath("spec/vatsim_status.txt")
+      gem_data = File.open(path, :encoding => 'iso-8859-15').read
+      data = Tempfile.new('vatsim_status', :encoding => 'iso-8859-15')
+      data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
+      File.rename data.path, "#{Dir.tmpdir}/vatsim_status.txt"
+      File.chmod(0777, LOCAL_STATUS)
+    end
+
 
   end
 
