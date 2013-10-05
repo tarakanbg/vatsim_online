@@ -37,9 +37,14 @@ module VatsimTools
     end
 
     def construct_gcmap_url
-      route = @origin + "-" + @latitude_humanized + "+" + @longitude_humanized + "-" + @destination
-      route += "%2C+\"" + @callsign + "%5Cn" + @altitude + "+ft%5Cn" + @groundspeed + "+kts"
-      route += "\"%2B%40" + @latitude_humanized + "+" + @longitude_humanized
+      if @origin && @latitude_humanized && @longitude_humanized && @destination
+        route = @origin + "-" + @latitude_humanized + "+" + @longitude_humanized + "-" + @destination
+        route += "%2C+\"" + @callsign + "%5Cn" + @altitude + "+ft%5Cn" + @groundspeed + "+kts"
+        route += "\"%2B%40" + @latitude_humanized + "+" + @longitude_humanized
+      else
+        route = "Position undetermined"
+      end
+      route
     end
 
     def latitude_parser(lat)

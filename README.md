@@ -332,6 +332,10 @@ the same result.
 
 ## Changelog
 
+### v. 0.8.2 - 5 October 2013
+
+* Handle undetermined position when drawing gcmap
+
 ### v. 0.8.1 - 5 October 2013
 
 * Ignore prefile data
