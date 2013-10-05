@@ -1,3 +1,3 @@
 module VatsimOnline
-  VERSION = "0.7.4.2"
+  VERSION = "0.8"
 end

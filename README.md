@@ -2,7 +2,7 @@
 
 A Ruby gem for selectively pulling, parsing and displaying Vatsim online
 stations data. Essentially it's a "Who's online" library, capable of displaying
-online ATC and/or pilots for given airports, areas or globally. Stations are
+online ATC and/or pilots for given airports, areas or globally and to filter by callsign. Stations are
 returned as objects, exposing a rich set of attributes. Vatsim data is pulled
 on preset intervals and cached locally to avoid flooding the servers.
 
@@ -31,10 +31,19 @@ Or install it yourself as:
 
 ## Usage
 
-This gem provides one public method: `vatsim_online`, which can be applied to
+This gem provides two public methods:
+
+* `vatsim_online`, which can be applied to
 any string (or variable containing a string) representing a full or partial ICAO
 code or a comma-separated list of ICAO codes. The provided ICAO code or fragment
 will be used as a search criteria and matched against the current vatsim data.
+
+* `vatsim_callsign`, which can be applied to
+any string (or variable containing a string) representing a full or partial pilot or ATC
+callsign or a comma-separated list of callsigns. The provided callsign or fragment
+will be used as a search criteria and matched against the current vatsim data.
+
+### Filter by ICAO code examples
 
 For example if you want to retrieve all active stations (ATC positions and pilots)
 for Vienna airport (ICAO: LOWW), then you can use:
@@ -74,6 +83,21 @@ return the pilots that are flying **to or from** the given area or airport,
 not the current enroute stations. The discovery algorithm is based on **origin
 and destination**.
 
+### Filter by callsign examples
+
+```ruby
+# Attaching the method directly to a string:
+"BAW".vatsim_callsign # => returns an array of all Speedbird flights as station objects
+
+# Attaching the method to a variable containing a string:
+callsign = "BAW"
+callsign.vatsim_callsign # => returns an array of all Speedbird flights as station objects
+
+# Attaching the method to a list of callsigns:
+callsign = "BAW, RYR"
+callsign.vatsim_callsign # => returns an array of all Speedbird and Ryanair flights as station objects
+```
+
 
 ### Anatomy of method returns
 
@@ -112,6 +136,8 @@ p1.remarks #=> "/V/ RMK/CHARTS"
 `Arrivals` and `departures` are returned separately for convenience, in case you
 want to loop through them separately. The `pilots` array contains all arrivals
 and departures.
+
+The `vatsim_callsign` method returns an **array** of all matching stations.
 
 ### Station attributes
 
@@ -305,6 +331,14 @@ front or after the identifiers or the commas, i.e. you can use
 the same result.
 
 ## Changelog
+
+### v. 0.8 - 5 October 2013
+
+* search by callsign implemented
+
+### v. 0.7.4 - 2 August 2013
+
+* fallback scenarios for offline data servers
 
 ### v. 0.7.2 - 15 July 2013
 

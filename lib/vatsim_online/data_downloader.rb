@@ -60,6 +60,7 @@ module VatsimTools
       File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
       File.chmod(0777, LOCAL_DATA)
       gem_data_file if curl.include? "<html><head>"
+      gem_data_file if File.open(LOCAL_DATA).size == 0
     rescue Curl::Err::HostResolutionError
       gem_data_file
     rescue Curl::Err::TimeoutError

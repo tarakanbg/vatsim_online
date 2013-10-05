@@ -32,6 +32,25 @@ describe VatsimOnline do
     end
   end
 
+  describe "vatsim_callsign" do
+    it "should work :)" do
+      gem_data_file
+      "AMZ1105".vatsim_callsign.class.should eq(Array)
+      "AMZ1105".vatsim_callsign.size.should eq(1)
+      "AMZ1105".vatsim_callsign.first.callsign.should eq("AMZ1105")      
+      "BAW".vatsim_callsign.size.should eq(15)
+      "BAW".vatsim_callsign.last.callsign.should eq("BAW9DV")      
+      "BAW, AMZ1105".vatsim_callsign.size.should eq(16)
+      "BAW, QFA".vatsim_callsign.size.should eq(21)
+      
+    end
+
+    it "should be case insensitive" do
+      gem_data_file
+      "amz1105".vatsim_callsign.first.callsign.should eq("AMZ1105")
+    end
+  end
+
 end
 
 

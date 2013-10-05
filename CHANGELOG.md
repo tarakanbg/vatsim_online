@@ -2,6 +2,14 @@
 
 ## Changelog
 
+### v. 0.8 - 5 October 2013
+
+* search by callsign implemented
+
+### v. 0.7.4 - 2 August 2013
+
+* fallback scenarios for offline data servers
+
 ### v. 0.7.2 - 15 July 2013
 
 * added gemspec license declaration
