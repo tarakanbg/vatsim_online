@@ -57,6 +57,7 @@ module VatsimTools
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
       File.rename data.path, LOCAL_DATA
       data = curl.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
+      data = data.slice(0..(data.index('!PREFILE:')))
       File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
       File.chmod(0777, LOCAL_DATA)
       gem_data_file if curl.include? "<html><head>"

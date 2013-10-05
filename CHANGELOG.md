@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### v. 0.8.1 - 5 October 2013
+
+* Ignore prefile data
+
 ### v. 0.8 - 5 October 2013
 
 * search by callsign implemented
