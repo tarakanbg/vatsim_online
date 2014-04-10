@@ -332,6 +332,10 @@ the same result.
 
 ## Changelog
 
+### v. 0.8.3 - 10 April 2014
+
+* Fix stale data bug, change data fallback logic
+
 ### v. 0.8.2 - 5 October 2013
 
 * Handle undetermined position when drawing gcmap

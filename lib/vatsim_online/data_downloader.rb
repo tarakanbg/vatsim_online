@@ -6,7 +6,9 @@ module VatsimTools
 
     STATUS_URL = "http://status.vatsim.net/status.txt"
     LOCAL_STATUS = "#{Dir.tmpdir}/vatsim_status.txt"
+    LOCAL_STATUS_BAK = "#{Dir.tmpdir}/vatsim_status_bak.txt"
     LOCAL_DATA = "#{Dir.tmpdir}/vatsim_data.txt"
+    LOCAL_DATA_BAK = "#{Dir.tmpdir}/vatsim_data_bak.txt"
 
     def initialize
       data_file
@@ -14,9 +16,10 @@ module VatsimTools
 
     def create_status_tempfile
       curl = Curl::Easy.new(STATUS_URL)
-      curl.timeout = 5
+      curl.timeout = 20
       curl.perform
       curl = curl.body_str
+      create_status_backup if File.exists?(LOCAL_STATUS)
       status = Tempfile.new('vatsim_status')
       File.rename status.path, LOCAL_STATUS
       File.open(LOCAL_STATUS, "w+") {|f| f.write(curl) }
@@ -26,10 +29,17 @@ module VatsimTools
       dummy_status
     rescue Curl::Err::TimeoutError
       dummy_status
-    rescue 
+    rescue
       dummy_status
     rescue Exception
-      dummy_status  
+      dummy_status
+    end
+
+    def create_status_backup
+      source = LOCAL_STATUS
+      target = LOCAL_STATUS_BAK
+      FileUtils.cp_r source, target
+      File.chmod(0777, LOCAL_STATUS_BAK)
     end
 
     def read_status_tempfile
@@ -51,9 +61,10 @@ module VatsimTools
 
     def create_local_data_file
       curl = Curl::Easy.new(servers.sample)
-      curl.timeout = 5
+      curl.timeout = 20
       curl.perform
       curl = curl.body_str
+      create_data_backup if File.exists?(LOCAL_DATA)
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
       File.rename data.path, LOCAL_DATA
       data = curl.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
@@ -69,7 +80,14 @@ module VatsimTools
     rescue
       gem_data_file
     rescue Exception
-      gem_data_file    
+      gem_data_file
+    end
+
+    def create_data_backup
+      source = LOCAL_DATA
+      target = LOCAL_DATA_BAK
+      FileUtils.cp_r source, target
+      File.chmod(0777, LOCAL_DATA_BAK)
     end
 
     def read_local_datafile
@@ -78,36 +96,22 @@ module VatsimTools
       difference > 2 ? create_local_data_file : data.read
     end
 
-    def data_file      
+    def data_file
       File.exists?(LOCAL_DATA) ? read_local_datafile : create_local_data_file
-      LOCAL_DATA    
+      LOCAL_DATA
     end
 
     def gem_data_file
-      # path = File.realpath("lib/vatsim_online/vatsim_data.txt")
-      # gem_data = File.open(path, :encoding => 'iso-8859-15').read
-      # data = Tempfile.new('vatsim_data', :encoding => 'iso-8859-15')
-      # data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
-      # File.rename data.path, "#{Dir.tmpdir}/vatsim_data.txt"
-
-      source = File.join(Gem.loaded_specs["vatsim_online"].full_gem_path, "spec", "vatsim_data.txt")
-      target = "#{Dir.tmpdir}/vatsim_data.txt"
+      source = LOCAL_DATA_BAK
+      target = LOCAL_DATA
       FileUtils.cp_r source, target
-
       File.chmod(0777, LOCAL_DATA)
     end
 
     def dummy_status
-      # path = File.realpath("lib/vatsim_online/vatsim_status.txt")
-      # gem_data = File.open(path, :encoding => 'iso-8859-15').read
-      # data = Tempfile.new('vatsim_status', :encoding => 'iso-8859-15')
-      # data.write(gem_data.gsub(/["]/, '\s').force_encoding('iso-8859-15'))
-      # File.rename data.path, "#{Dir.tmpdir}/vatsim_status.txt"
-
-      source = File.join(Gem.loaded_specs["vatsim_online"].full_gem_path, "spec", "vatsim_status.txt")
-      target = "#{Dir.tmpdir}/vatsim_status.txt"
+      source = LOCAL_STATUS_BAK
+      target = LOCAL_STATUS
       FileUtils.cp_r source, target
-
       File.chmod(0777, LOCAL_STATUS)
     end
 
