@@ -22,8 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "libnotify"
   gem.add_development_dependency "rb-inotify"
   gem.add_development_dependency "guard-rspec"
-  gem.add_dependency "curb", "~> 0.8.5"
+  gem.add_dependency "curb", "~> 0.8.8"
   gem.add_dependency "time_diff", "~> 0.3.0"
   gem.add_dependency "gcmapper", "~> 0.4.0"
 end
-

@@ -332,6 +332,10 @@ the same result.
 
 ## Changelog
 
+### v. 0.9 - 20 June 2015
+
+* Fixed nil String bug, can select "ALL" (thanks to Pierre Ferran and Florian Rimoli)
+
 ### v. 0.8.3 - 10 April 2014
 
 * Fix stale data bug, change data fallback logic
@@ -452,12 +456,12 @@ original Vatsim data is re-encoded
 
 ## Credits
 
-Copyright © 2013 [Svilen Vassilev](http://svilen.rubystudio.net)
+Copyright © 2015 [Svilen Vassilev](http://svilen.rubystudio.net)
 
-*If you find my work useful or time-saving, you can endorse it or buy me a cup of coffee:*
+### Contributors
 
-[![endorse](http://api.coderwall.com/svilenv/endorsecount.png)](http://coderwall.com/svilenv)
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5FR7AQA4PLD8A)
+[Florian Rimoli](https://github.com/Flox06)
+[Pierre Ferran](https://github.com/pierr3)
 
 Released under the [MIT LICENSE](https://github.com/tarakanbg/vatsim_online/blob/master/LICENSE)
 
