@@ -460,8 +460,8 @@ Copyright © 2015 [Svilen Vassilev](http://svilen.rubystudio.net)
 
 ### Contributors
 
-[Florian Rimoli](https://github.com/Flox06)
-[Pierre Ferran](https://github.com/pierr3)
+* [Florian Rimoli](https://github.com/Flox06)
+* [Pierre Ferran](https://github.com/pierr3)
 
 Released under the [MIT LICENSE](https://github.com/tarakanbg/vatsim_online/blob/master/LICENSE)
 
