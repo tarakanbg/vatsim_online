@@ -115,7 +115,6 @@ module VatsimTools
       File.chmod(0777, LOCAL_STATUS)
     end
 
-
   end
 
 end

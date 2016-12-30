@@ -13,7 +13,7 @@ on preset intervals and cached locally to avoid flooding the servers.
 
 ## Requirements
 
-[Ruby 1.9.3](http://www.ruby-lang.org/en/downloads/) or higher | **Supports Ruby 2.0!**
+[Ruby 2.0](http://www.ruby-lang.org/en/downloads/) or higher
 
 ## Installation
 
@@ -332,6 +332,10 @@ the same result.
 
 ## Changelog
 
+### v. 0.9.1 - 31 Dec 2016
+
+* Maintenance release, updated dependencies
+
 ### v. 0.9 - 20 June 2015
 
 * Fixed nil String bug, can select "ALL" (thanks to Pierre Ferran and Florian Rimoli)
@@ -456,7 +460,7 @@ original Vatsim data is re-encoded
 
 ## Credits
 
-Copyright © 2015 [Svilen Vassilev](http://svilen.rubystudio.net)
+Copyright © 2016 [Svilen Vassilev](http://svilen.rubystudio.net)
 
 ### Contributors
 

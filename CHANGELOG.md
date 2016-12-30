@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### v. 0.9.1 - 31 Dec 2016
+
+* Maintenance release, updated dependencies
+
 ### v. 0.9 - 20 June 2015
 
 * Fixed nil String bug, can select "ALL" (thanks to Pierre Ferran and Florian Rimoli)
