@@ -2,7 +2,7 @@ module VatsimTools
 
   class DataDownloader
 
-    %w{tempfile time_diff tmpdir csv}.each { |lib| require lib }
+    %w{tempfile time_diff tmpdir csv net/http}.each { |lib| require lib }
 
     STATUS_URL = "http://status.vatsim.net/status.txt"
     LOCAL_STATUS = "#{Dir.tmpdir}/vatsim_status.txt"
@@ -15,10 +15,7 @@ module VatsimTools
     end
 
     def create_status_tempfile
-      curl = Curl::Easy.new(STATUS_URL)
-      curl.timeout = 20
-      curl.perform
-      curl = curl.body_str
+      curl = get_data(STATUS_URL)
       curl.gsub!("\n", '')
       create_status_backup if File.exists?(LOCAL_STATUS)
       status = Tempfile.new('vatsim_status')
@@ -27,9 +24,9 @@ module VatsimTools
       File.open(LOCAL_STATUS, "w+") {|f| f.write(curl) }
       File.chmod(0777, LOCAL_STATUS)
       dummy_status if curl.include? "<html><head>"
-    rescue Curl::Err::HostResolutionError
+    rescue Net::HTTPNotFound
       dummy_status
-    rescue Curl::Err::TimeoutError
+    rescue Net::HTTPRequestTimeOut
       dummy_status
     rescue
       dummy_status
@@ -65,10 +62,7 @@ module VatsimTools
     end
 
     def create_local_data_file
-      curl = Curl::Easy.new(servers.sample)
-      curl.timeout = 20
-      curl.perform
-      curl = curl.body_str
+      curl = get_data(servers.sample)
       curl.gsub!("\n", '')
       create_data_backup if File.exists?(LOCAL_DATA)
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
@@ -82,9 +76,9 @@ module VatsimTools
       data_file = File.open(LOCAL_DATA)
       gem_data_file if data_file.size == 0
       data_file.close
-    rescue Curl::Err::HostResolutionError
+    rescue Net::HTTPNotFound
       gem_data_file
-    rescue Curl::Err::TimeoutError
+    rescue Net::HTTPRequestTimeOut
       gem_data_file
     rescue
       gem_data_file
@@ -124,7 +118,10 @@ module VatsimTools
       FileUtils.cp_r source, target
       File.chmod(0777, LOCAL_STATUS)
     end
-
+    def get_data(url)
+      uri = URI(url)
+      Net::HTTP.get(uri)
+    end
   end
 
 end
