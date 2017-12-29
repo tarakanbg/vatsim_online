@@ -2,7 +2,7 @@ module VatsimTools
 
   class DataDownloader
 
-    %w{curb tempfile time_diff tmpdir csv}.each { |lib| require lib }
+    %w{tempfile time_diff tmpdir csv}.each { |lib| require lib }
 
     STATUS_URL = "http://status.vatsim.net/status.txt"
     LOCAL_STATUS = "#{Dir.tmpdir}/vatsim_status.txt"
