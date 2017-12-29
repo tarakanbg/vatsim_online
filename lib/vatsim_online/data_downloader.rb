@@ -21,6 +21,7 @@ module VatsimTools
       curl = curl.body_str
       create_status_backup if File.exists?(LOCAL_STATUS)
       status = Tempfile.new('vatsim_status')
+      status.close
       File.rename status.path, LOCAL_STATUS
       File.open(LOCAL_STATUS, "w+") {|f| f.write(curl) }
       File.chmod(0777, LOCAL_STATUS)
@@ -46,6 +47,7 @@ module VatsimTools
       status = File.open(LOCAL_STATUS)
       difference = Time.diff(status.ctime, Time.now)[:hour]
       difference > 3 ? create_status_tempfile : status.read
+      status.close
     end
 
     def status_file
@@ -55,7 +57,9 @@ module VatsimTools
 
     def servers
       urls = []
-      CSV.foreach(status_file, :col_sep =>'=') {|row| urls << row[1] if row[0] == "url0"}
+      CSV.foreach(status_file, :col_sep =>'=') do |row|
+        urls << row[1] if row[0] == "url0"
+      end
       urls
     end
 
@@ -66,13 +70,16 @@ module VatsimTools
       curl = curl.body_str
       create_data_backup if File.exists?(LOCAL_DATA)
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
+      data.close
       File.rename data.path, LOCAL_DATA
       data = curl.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
       data = data.slice(0..(data.index('!PREFILE:')))
       File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
       File.chmod(0777, LOCAL_DATA)
       gem_data_file if curl.include? "<html><head>"
-      gem_data_file if File.open(LOCAL_DATA).size == 0
+      data_file = File.open(LOCAL_DATA)
+      gem_data_file if data_file.size == 0
+      data_file.close
     rescue Curl::Err::HostResolutionError
       gem_data_file
     rescue Curl::Err::TimeoutError
@@ -94,6 +101,7 @@ module VatsimTools
       data = File.open(LOCAL_DATA)
       difference = Time.diff(data.ctime, Time.now)[:minute]
       difference > 2 ? create_local_data_file : data.read
+      data.close
     end
 
     def data_file
