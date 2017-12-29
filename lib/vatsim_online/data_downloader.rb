@@ -19,6 +19,7 @@ module VatsimTools
       curl.timeout = 20
       curl.perform
       curl = curl.body_str
+      curl.gsub!("\n", '')
       create_status_backup if File.exists?(LOCAL_STATUS)
       status = Tempfile.new('vatsim_status')
       status.close
@@ -68,6 +69,7 @@ module VatsimTools
       curl.timeout = 20
       curl.perform
       curl = curl.body_str
+      curl.gsub!("\n", '')
       create_data_backup if File.exists?(LOCAL_DATA)
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
       data.close
