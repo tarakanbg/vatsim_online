@@ -1,36 +1,36 @@
 module VatsimTools
-
+require 'tempfile'
+require 'time_diff'
+require 'tmpdir'
+require 'net/http'
+require 'fileutils'
   class DataDownloader
 
-    %w{tempfile time_diff tmpdir csv net/http}.each { |lib| require lib }
-
     STATUS_URL = "http://status.vatsim.net/status.txt"
-    LOCAL_STATUS = "#{Dir.tmpdir}/vatsim_status.txt"
-    LOCAL_STATUS_BAK = "#{Dir.tmpdir}/vatsim_status_bak.txt"
-    LOCAL_DATA = "#{Dir.tmpdir}/vatsim_data.txt"
-    LOCAL_DATA_BAK = "#{Dir.tmpdir}/vatsim_data_bak.txt"
+    TEMP_DIR = "#{Dir.tmpdir}/vatsim_online"
+    LOCAL_STATUS = "#{Dir.tmpdir}/vatsim_online/vatsim_status.txt"
+    LOCAL_STATUS_BAK = "#{Dir.tmpdir}/vatsim_online/vatsim_status_bak.txt"
+    LOCAL_DATA = "#{Dir.tmpdir}/vatsim_online/vatsim_data.txt"
+    LOCAL_DATA_BAK = "#{Dir.tmpdir}/vatsim_online/vatsim_data_bak.txt"
 
     def initialize
+      FileUtils.mkdir(TEMP_DIR) unless File.exist? TEMP_DIR
       data_file
     end
 
     def create_status_tempfile
-      curl = get_data(STATUS_URL)
-      curl.gsub!("\n", '')
+      uri = URI(STATUS_URL)
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Get.new(uri.path)
+      data = http.request(request).body.gsub("\n", '')
       create_status_backup if File.exists?(LOCAL_STATUS)
       status = Tempfile.new('vatsim_status')
       status.close
       File.rename status.path, LOCAL_STATUS
-      File.open(LOCAL_STATUS, "w+") {|f| f.write(curl) }
+      File.write(LOCAL_STATUS, data)
       File.chmod(0777, LOCAL_STATUS)
-      dummy_status if curl.include? "<html><head>"
-    rescue Net::HTTPNotFound
-      dummy_status
-    rescue Net::HTTPRequestTimeOut
-      dummy_status
-    rescue
-      dummy_status
-    rescue Exception
+      dummy_status if data.include? "<html><head>"
+    rescue Exception => e
       dummy_status
     end
 
@@ -44,8 +44,13 @@ module VatsimTools
     def read_status_tempfile
       status = File.open(LOCAL_STATUS)
       difference = Time.diff(status.ctime, Time.now)[:hour]
-      difference > 3 ? create_status_tempfile : status.read
+      if difference > 3
+        data = create_status_tempfile
+      else
+        data = status.read
+      end
       status.close
+      data
     end
 
     def status_file
@@ -62,27 +67,24 @@ module VatsimTools
     end
 
     def create_local_data_file
-      curl = get_data(servers.sample)
-      curl.gsub!("\n", '')
+      uri = URI(servers.sample)
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Get.new(uri.path)
+      req_data = http.request(request).body.gsub("\n", '')
       create_data_backup if File.exists?(LOCAL_DATA)
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
       data.close
       File.rename data.path, LOCAL_DATA
-      data = curl.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
+      data = req_data.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
       data = data.slice(0..(data.index('!PREFILE:')))
-      File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
+      file = File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
+      file.close
       File.chmod(0777, LOCAL_DATA)
-      gem_data_file if curl.include? "<html><head>"
-      data_file = File.open(LOCAL_DATA)
-      gem_data_file if data_file.size == 0
-      data_file.close
-    rescue Net::HTTPNotFound
-      gem_data_file
-    rescue Net::HTTPRequestTimeOut
-      gem_data_file
-    rescue
-      gem_data_file
-    rescue Exception
+      gem_data_file if req_data.include? "<html><head>"
+      file = File.open(LOCAL_DATA)
+      gem_data_file if file.size == 0
+      file.close
+    rescue Exception => e
       gem_data_file
     end
 
@@ -97,7 +99,13 @@ module VatsimTools
       data = File.open(LOCAL_DATA)
       difference = Time.diff(data.ctime, Time.now)[:minute]
       difference > 2 ? create_local_data_file : data.read
+      if difference > 2
+        d = create_local_data_file
+      else
+        d = data.read
+      end
       data.close
+      d
     end
 
     def data_file
