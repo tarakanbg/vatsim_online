@@ -70,15 +70,14 @@ require 'fileutils'
       uri = URI(servers.sample)
       http = Net::HTTP.new(uri.host, uri.port)
       request = Net::HTTP::Get.new(uri.path)
-      req_data = http.request(request).body.gsub("\n", '')
+      req_data = http.request(request).body
       create_data_backup if File.exists?(LOCAL_DATA)
       data = Tempfile.new('vatsim_data', :encoding => 'utf-8')
       data.close
       File.rename data.path, LOCAL_DATA
       data = req_data.gsub(/["]/, '\s').encode!('UTF-16', 'UTF-8', :invalid => :replace, :replace => '').encode!('UTF-8', 'UTF-16')
       data = data.slice(0..(data.index('!PREFILE:')))
-      file = File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
-      file.close
+      File.open(LOCAL_DATA, "w+") {|f| f.write(data)}
       File.chmod(0777, LOCAL_DATA)
       gem_data_file if req_data.include? "<html><head>"
       file = File.open(LOCAL_DATA)
