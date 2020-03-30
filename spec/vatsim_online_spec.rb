@@ -1,4 +1,5 @@
 require 'spec_helper.rb'
+require 'vatsim_online_spec_helper.rb'
 
 describe VatsimOnline do
 

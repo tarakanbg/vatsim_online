@@ -9,7 +9,7 @@ module VatsimTools
     attributes = %w{role icao excluded gcmap_width gcmap_height}
     attributes.each {|attribute| attr_accessor attribute.to_sym }
 
-    LOCAL_DATA = "#{Dir.tmpdir}/vatsim_data.txt"
+    LOCAL_DATA = "#{Dir.tmpdir}/vatsim_online/vatsim_data.txt"
 
     def initialize(icao, args = nil)
       VatsimTools::DataDownloader.new

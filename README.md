@@ -1,4 +1,9 @@
-# Vatsim Online
+# Vatsim Online Redux
+
+Original credit for this gem goes to https://github.com/tarakanbg/vatsim_online 
+
+I've updated it to make it work with update to date Ruby and with Windows.
+If at any time the original dev comes back, Ill merge this Gem back into theirs.
 
 A Ruby gem for selectively pulling, parsing and displaying Vatsim online
 stations data. Essentially it's a "Who's online" library, capable of displaying
@@ -13,13 +18,13 @@ on preset intervals and cached locally to avoid flooding the servers.
 
 ## Requirements
 
-[Ruby 2.0](http://www.ruby-lang.org/en/downloads/) or higher
+[Ruby 2.6.0](http://www.ruby-lang.org/en/downloads/) or higher
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'vatsim_online'
+    gem 'vatsim_online_redux'
 
 And then execute:
 
@@ -27,7 +32,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install vatsim_online
+    $ gem install vatsim_online_redux
 
 ## Usage
 
@@ -461,6 +466,7 @@ original Vatsim data is re-encoded
 ## Credits
 
 Copyright © 2016 [Svilen Vassilev](http://svilen.rubystudio.net)
+Copyright © 2020 [Alex Dent](https://github.com/aldent95)
 
 ### Contributors
 

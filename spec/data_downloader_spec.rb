@@ -13,8 +13,10 @@ describe VatsimTools::DataDownloader do
       File.exists?(LOCAL_STATUS).should be false
       target.new.create_status_tempfile
       File.exists?(LOCAL_STATUS).should be true
-      File.open(LOCAL_STATUS).path.should eq("#{Dir.tmpdir}/vatsim_status.txt")
-      File.open(LOCAL_STATUS).size.should be > 100
+      status = File.open(LOCAL_STATUS)
+      status.path.should eq("#{Dir.tmpdir}/vatsim_status.txt")
+      status.size.should be > 100
+      status.close
     end
   end
 
@@ -22,7 +24,9 @@ describe VatsimTools::DataDownloader do
     it "should confirm a file exists" do
       target.new.read_status_tempfile
       File.exists?(LOCAL_STATUS).should be true
-      File.open(LOCAL_STATUS).size.should be > 100
+      status = File.open(LOCAL_STATUS)
+      status.size.should be > 100
+      status.close
     end
   end
 
@@ -48,10 +52,14 @@ describe VatsimTools::DataDownloader do
 
   describe "create_local_data_file" do
     it "should confirm a file exists" do
+      delete_local_files
+      File.exists?(LOCAL_DATA).should be false
       target.new.create_local_data_file
       File.exists?(LOCAL_DATA).should be true
-      File.open(LOCAL_DATA).path.should eq("#{Dir.tmpdir}/vatsim_data.txt")
-      File.open(LOCAL_DATA).size.should be > 100
+      data = File.open(LOCAL_DATA)
+      data.path.should eq("#{Dir.tmpdir}/vatsim_data.txt")
+      data.size.should be > 100
+      data.close
     end
   end
 
@@ -59,7 +67,9 @@ describe VatsimTools::DataDownloader do
     it "should confirm a file exists" do
       target.new.read_local_datafile
       File.exists?(LOCAL_DATA).should be true
-      File.open(LOCAL_DATA).size.should be > 100
+      data = File.open(LOCAL_DATA)
+      data.size.should be > 100
+      data.close
     end
   end
 
@@ -83,8 +93,12 @@ describe VatsimTools::DataDownloader do
       target.new
       File.exists?(LOCAL_DATA).should be true
       File.exists?(LOCAL_STATUS).should be true
-      File.open(LOCAL_DATA).size.should be > 100
-      File.open(LOCAL_STATUS).size.should be > 100
+      data = File.open(LOCAL_DATA)
+      status = File.open(LOCAL_DATA)
+      data.size.should be > 100
+      status.size.should be > 100
+      status.close
+      data.close
     end
   end
 
